@@ -1,34 +1,24 @@
 ---
-
+import Layout from '../layout.astro'
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Haunted Folio 👻</title>
-  </head>
-  <body>
-    <div class="fixed left-0 top-0 size-full">
-      <div class="relative size-full bg-[#1C1328]">
-        <div class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:55px_55px]"></div>
-        <div class="flex size-full items-center max-w-4xl mx-auto">
-          <div class="flex flex-col gap-10 z-20">
-            <h1 class="text-5xl lg:text-9xl font-bold text-gray-300/90">Turn your github into a hauntedfolio 🎃</h1>
-            <input 
-              class="w-full border-black border-2 p-6 focus-within:outline-none focus:shadow-[6px_6px_0px_rgba(0,0,0,1)] active:shadow-[6px_6px_0px_rgba(0,0,0,1)] text-2xl focus-within:text-[#A600A0] font-medium"  
-              placeholder="xavimondev"
-              autocapitalize="off"
-              autocomplete="off"
-              autocorrect="off"
-              spellcheck="false"
-            />
-          </div>
+<Layout>
+  <div class="fixed left-0 top-0 size-full">
+    <div class="relative size-full">
+      <div class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:55px_55px]"></div>
+      <div class="flex size-full items-center max-w-4xl mx-auto">
+        <div class="flex flex-col gap-10 z-20">
+          <h1 class="text-5xl lg:text-9xl font-bold text-gray-300/90">Turn your github into a hauntedfolio 🎃</h1>
+          <input 
+            class="w-full border-black border-2 p-6 focus-within:outline-none focus:shadow-[6px_6px_0px_rgba(0,0,0,1)] active:shadow-[6px_6px_0px_rgba(0,0,0,1)] text-2xl focus-within:text-[#A600A0] font-medium"  
+            placeholder="xavimondev"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
         </div>
-
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</Layout>
