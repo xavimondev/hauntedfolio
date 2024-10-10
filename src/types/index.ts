@@ -57,3 +57,74 @@ export interface UserData {
 	githubUrl: string
 	twitter: string | null
 }
+
+export interface GitRepositoryResponse {
+	data: {
+		viewer: Viewer
+	}
+	errors?: unknown
+}
+
+interface Viewer {
+	repositories: Repositories
+}
+
+interface Repositories {
+	totalCount: number
+	nodes: NodeRepository[]
+}
+
+export interface NodeRepository {
+	name: string
+	stargazerCount: number
+	description: string
+	createdAt: Date
+	forkCount: number
+	issues: Issue
+	pullRequests: PullRequest
+	primaryLanguage: PrimaryLanguage
+}
+
+interface Issue {
+	totalCount: number
+}
+
+interface PullRequest {
+	totalCount: number
+}
+
+interface PrimaryLanguage {
+	name: string
+	color: string
+}
+
+interface PrimaryLanguage {
+	name: string
+	color: string
+}
+
+export interface TopRepositoryData {
+	name: string
+	stars: number
+	pullRequests: number
+	forks: number
+	primaryLanguage: PrimaryLanguage
+}
+
+export interface GitRepositoryLanguage {
+	name: string
+	languages: ProgrammingLanguage
+}
+
+export interface ProgrammingLanguage {
+	edges: EdgeLanguage[]
+}
+
+export interface EdgeLanguage {
+	size: number
+	node: NodeLanguage
+}
+
+export interface NodeLanguage {
+	name: string
+}
