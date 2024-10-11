@@ -1,6 +1,6 @@
 export const REPOSITORIES_QUERY = `
-query ($number_of_repos: Int!) {
-  viewer {
+query ($login: String!, $number_of_repos: Int!) {
+  user(login: $login) {
     repositories(
       first: $number_of_repos
       ownerAffiliations: OWNER
@@ -30,8 +30,8 @@ query ($number_of_repos: Int!) {
 }`
 
 export const TOP_LANGUAGES_QUERY = `
-query ($after: String) {
-  viewer {
+query ($login: String!, $after: String) {
+  user(login: $login) {
     repositories(
       first: 100
       ownerAffiliations: OWNER
