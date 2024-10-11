@@ -1,14 +1,24 @@
 ---
-
+import '@fontsource/creepster'
+import '@fontsource/crimson-text'
+import '@fontsource-variable/roboto-mono'
+import creepsterWoff2 from '@fontsource/creepster/files/creepster-latin-400-normal.woff2?url'
+import robotoMonoWoff2 from '@fontsource-variable/roboto-mono/files/roboto-mono-latin-wght-normal.woff2?url'
+// import crimsonWoff2 from '@fontsource/crimson-text/files/crimson-text-latin-400-normal.woff2?url'
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={creepsterWoff2} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={robotoMonoWoff2} crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Haunted Folio 👻</title>
   </head>
   <body class="bg-[#1C1328]">
-    <slot/>
+    <main>
+      <slot/>
+    </main>
   </body>
 </html>
