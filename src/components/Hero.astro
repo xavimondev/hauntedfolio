@@ -4,20 +4,31 @@ interface Props {
 	name: string
 	avatarUrl: string
 	bio: string
-	location: string
+	location: string | null
 	company: string | null
 	githubUrl: string
 	twitter: string | null
 }
 
-const { name, avatarUrl, bio, location, company, githubUrl, twitter } = Astro.props
+const { login, name, avatarUrl, bio, location, company, githubUrl } = Astro.props
 ---
-<section class="hero">
-  <div class="hero-content">
-    <img src={avatarUrl} alt="Sppooky foto" class="user-photo">
-    <div class="user-info">
-      <h1>{name}</h1>
-      <p>{bio}</p>
+<section class="size-full max-w-4xl mx-auto mt-20">
+  <div class="flex gap-10 items-center">
+    <img src={avatarUrl} alt="Sppooky foto" class="rounded-full size-64 border-[5px] border-orange-500">
+    <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
+				<h1 class="text-2xl lg:text-5xl font-bold text-gray-300/90">
+					<span class="bg-gradient-to-tr from-yellow-100 to-orange-300 bg-clip-text text-transparent font-bold">the devourer of data</span>
+					😋
+				</h1>
+				<div class="flex gap-4">
+					<a href={githubUrl} target="_blank" rel="noreferrer noopener" class="text-orange-400 font-bold hover:underline underline-offset-1">
+						🚀 {login}
+					</a>
+					{location && <span class="text-yellow-400 font-bold">🗺️ {location}</span>}
+				</div>
+			</div>
+      <p class="text-sm lg:text-base text-gray-300/90 text-pretty">{`💀 ${name}, a sorcerer of JavaScript, TypeScript, and Astro, conjures cursed projects like seo-ai and summary.ai, devouring data from the shadows. Dare to cross his dark path! ☠️`}</p>
     </div>
   </div>
 </section>

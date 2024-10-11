@@ -20,7 +20,7 @@ export interface UserResponse {
 	name: string
 	company: string | null
 	blog: string
-	location: string
+	location: string | null
 	email: string | null
 	hireable: null
 	bio: string
@@ -52,7 +52,7 @@ export interface UserData {
 	name: string
 	avatarUrl: string
 	bio: string
-	location: string
+	location: string | null
 	company: string | null
 	githubUrl: string
 	twitter: string | null

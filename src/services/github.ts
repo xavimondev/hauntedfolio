@@ -4,7 +4,9 @@ import type { GitRepositoryLanguage, UserData, UserResponse } from '../types'
 
 const BASE_URL = 'https://api.github.com'
 
-export const fetchUserData = async ({ username }: { username: string }): Promise<UserData> => {
+export const fetchUserData = async ({
+	username
+}: { username: string }): Promise<UserData | null> => {
 	const response = await fetch(`${BASE_URL}/users/${username}`, {
 		method: 'GET',
 		headers: {
@@ -12,7 +14,13 @@ export const fetchUserData = async ({ username }: { username: string }): Promise
 			Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}`
 		}
 	})
-	const data = (await response.json()) as UserResponse
+	const result = await response.json()
+
+	if (result.status === '404' || result.message) {
+		return null
+	}
+
+	const data = result as UserResponse
 
 	return getUserData({ user: data })
 }
