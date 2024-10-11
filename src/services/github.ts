@@ -1,4 +1,4 @@
-import { getUserData } from '@/helpers/github'
+import { getTopLanguages, getTopRepositories, getUserData } from '@/helpers/github'
 import { REPOSITORIES_QUERY, TOP_LANGUAGES_QUERY } from '@/queries'
 import type { GitRepositoryLanguage, UserData, UserResponse } from '@/types'
 
@@ -27,8 +27,8 @@ export const fetchUserData = async ({
 
 export const fetchUserRepos = async ({
 	username,
-	numberofRepos
-}: { username: string; numberofRepos?: number }) => {
+	numberOfRepos
+}: { username: string; numberOfRepos?: number }) => {
 	try {
 		const response = await fetch('https://api.github.com/graphql', {
 			method: 'POST',
@@ -40,7 +40,8 @@ export const fetchUserRepos = async ({
 			body: JSON.stringify({
 				query: REPOSITORIES_QUERY,
 				variables: {
-					number_of_repos: numberofRepos ?? 10
+					number_of_repos: numberOfRepos ?? 10,
+					login: username
 				}
 			})
 		})
@@ -55,22 +56,22 @@ export const fetchUserRepos = async ({
 			console.error(errors)
 			throw new Error('An error occured during fetching repositories')
 		}
-
-		return data
+		const topRepositories = getTopRepositories({ repositories: data })
+		return topRepositories
 	} catch (error) {
 		console.error(error)
 	}
 }
 
-export const getLanguagesFromRepositories = async (): Promise<
-	GitRepositoryLanguage[] | undefined
-> => {
+export const getLanguagesFromRepositories = async ({
+	username
+}: { username: string }): Promise<[string, number][] | undefined> => {
 	try {
 		const languagesRepositories: GitRepositoryLanguage[] = []
 		let hasNextPage = true
 		let endCursor = null
 		while (hasNextPage) {
-			const variables = { after: endCursor }
+			const variables = { login: username, after: endCursor }
 			const response = await fetch('https://api.github.com/graphql', {
 				method: 'POST',
 				headers: {
@@ -94,7 +95,7 @@ export const getLanguagesFromRepositories = async (): Promise<
 				throw new Error('An error occured during fetching repositories')
 			}
 
-			const repositories = data.data.viewer.repositories
+			const repositories = data.data.user.repositories
 			const repositoryNodes: GitRepositoryLanguage[] = repositories.nodes
 			if (repositoryNodes.length > 0) {
 				languagesRepositories.push(...repositoryNodes)
@@ -104,7 +105,8 @@ export const getLanguagesFromRepositories = async (): Promise<
 			endCursor = repositories.pageInfo.endCursor
 		}
 
-		return languagesRepositories
+		const repositories = getTopLanguages({ repositories: languagesRepositories })
+		return repositories
 	} catch (error) {
 		console.error(error)
 	}

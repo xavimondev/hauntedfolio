@@ -27,7 +27,7 @@ export const getTopRepositories = ({
 }: {
 	repositories: GitRepositoryResponse
 }): TopRepositoryData[] => {
-	const repos = repositories.data.viewer.repositories.nodes
+	const repos = repositories.data.user.repositories.nodes
 	const topRepositories = repos.map((repo: NodeRepository) => ({
 		name: repo.name,
 		stars: repo.stargazerCount,

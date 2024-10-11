@@ -60,7 +60,7 @@ export interface UserData {
 
 export interface GitRepositoryResponse {
 	data: {
-		viewer: Viewer
+		user: { repositories: Repositories }
 	}
 	errors?: unknown
 }
