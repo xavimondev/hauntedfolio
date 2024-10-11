@@ -1,6 +1,6 @@
-import { getUserData } from '../helpers/github'
-import { REPOSITORIES_QUERY, TOP_LANGUAGES_QUERY } from '../queries'
-import type { GitRepositoryLanguage, UserData, UserResponse } from '../types'
+import { getUserData } from '@/helpers/github'
+import { REPOSITORIES_QUERY, TOP_LANGUAGES_QUERY } from '@/queries'
+import type { GitRepositoryLanguage, UserData, UserResponse } from '@/types'
 
 const BASE_URL = 'https://api.github.com'
 

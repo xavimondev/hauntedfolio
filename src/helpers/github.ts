@@ -6,7 +6,7 @@ import type {
 	TopRepositoryData,
 	UserData,
 	UserResponse
-} from '../types'
+} from '@/types'
 
 export const getUserData = ({ user }: { user: UserResponse }): UserData => {
 	const { name, avatar_url, bio, location, login, company, html_url, twitter_username } = user
