@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
 import { createOpenAI } from '@ai-sdk/openai'
-import { generateObject, generateText } from 'ai'
+import { generateObject } from 'ai'
 import { fetchUserData, fetchUserRepos, getLanguagesFromRepositories } from '@/services/github'
 import { z } from 'zod'
 import { formatSpookyBioPrompt } from '@/prompts'
@@ -66,8 +66,6 @@ export const GET: APIRoute = async ({ params }) => {
 		})
 	})
 
-	// console.log(object.spookyData)
-
 	return new Response(
 		JSON.stringify({
 			data: {
@@ -76,24 +74,10 @@ export const GET: APIRoute = async ({ params }) => {
 				githubUrl,
 				...object.spookyData,
 				location,
-				avatarUrl
+				avatarUrl,
+				topLanguages,
+				featuredProjects
 			}
 		})
 	)
-}
-
-export const POST: APIRoute = async ({ request }) => {
-	if (request.headers.get('Content-Type') === 'application/json') {
-		const body = await request.json()
-		const name = body.name
-		return new Response(
-			JSON.stringify({
-				message: `Your name was: ${name}`
-			}),
-			{
-				status: 200
-			}
-		)
-	}
-	return new Response(null, { status: 400 })
 }
