@@ -1,14 +1,20 @@
 ---
 import Hero from '../../components/Hero.astro'
+import UserNotFound from '../../components/UserNotFound.astro'
 import Layout from '../../layout.astro'
 import { fetchUserData } from '../../services/github'
 
 const { user } = Astro.params
-// TODO: check when user is not defined, invalid username
-const userData = await fetchUserData({ username: user ?? 'xavimondev' })
+
+if (!user) {
+	Astro.redirect('/404')
+	return
+}
+
+const userData = await fetchUserData({ username: user })
 ---
 
 <Layout>
-  <h2>{user}</h2>
-  <Hero {...userData} />
+  {!userData && <UserNotFound />}
+  {userData && <Hero {...userData} />}
 </Layout>
