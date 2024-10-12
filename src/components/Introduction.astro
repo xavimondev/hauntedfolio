@@ -32,13 +32,13 @@ const { avatarUrl, bio, summary, publicId } = Astro.props
   const publicIdValue = publicId.value
   const avatarElement = document.getElementById('avatar') as HTMLImageElement
   const spookyFactElement = document.getElementById('spookyFact') as HTMLParagraphElement
+  const progressBarElement = document.getElementById('progress-bar') as HTMLDivElement
+  const percentageElement = document.getElementById('percentage') as HTMLParagraphElement
 
-  // function sleep(ms: number) {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
   let c = 0
+  const MAX_FACTS = 5
   const generateAvatar = async () => {
-    if(c === 1) return
+    if(c === MAX_FACTS) return
 
     const response = await fetch('/api/facts', {
       method: 'POST',
@@ -56,9 +56,10 @@ const { avatarUrl, bio, summary, publicId } = Astro.props
     avatarElement.src = url
     avatarElement.onload = () => {
       c++
-      console.log({url,c});
       spookyFactElement.textContent = content
       generateAvatar()
+      progressBarElement.style.width = `${(c/MAX_FACTS)*100}%`
+      percentageElement.textContent = `${((c/MAX_FACTS)*100).toFixed()}%`
     }
   }
 

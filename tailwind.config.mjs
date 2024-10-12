@@ -9,6 +9,12 @@ export default {
 				heading: ['Creepster', ...defaultTheme.fontFamily.sans],
 				subtitle: ['Crimson Text', ...defaultTheme.fontFamily.sans],
 				body: ['Roboto Mono Variable', ...defaultTheme.fontFamily.sans]
+			},
+			keyframes: {
+				dotAppear: {
+					'0%': { opacity: 0 },
+					'33%, 100%': { opacity: 1 }
+				}
 			}
 		}
 	},
