@@ -1,0 +1,66 @@
+---
+import Loader from './Loader.astro'
+
+interface Props {
+	avatarUrl: string
+	bio: string
+	summary: string
+	publicId: string
+}
+
+const { avatarUrl, bio, summary, publicId } = Astro.props
+---
+
+<section class="content-center h-screen w-screen">
+  <textarea name="summary" id="summary" class="hidden">{summary}</textarea>
+  <input name="publicId" id="publicId" class="hidden" value={publicId} />
+  <div class="w-full mx-auto max-w-4xl flex flex-col justify-center items-center gap-8">
+    <img src={avatarUrl} alt="Sppooky foto" class="rounded-full size-72 xl:size-96 border-[5px] border-orange-500" id="avatar">
+    <div class="h-32">
+      <p class="text-2xl lg:text-4xl text-green-400 font-medium text-center font-body" id="spookyFact">😏{bio}🤩</p> 
+    </div>
+    <Loader />
+  </div>
+</section>
+<!-- define:vars={{ summary, avatarUrl }} -->
+<script>
+  import { transform } from '@/services/transformations'
+  const summary = document.getElementById('summary') as HTMLTextAreaElement
+  const publicId = document.getElementById('publicId') as HTMLInputElement
+
+  const summaryValue = summary.value
+  const publicIdValue = publicId.value
+  const avatarElement = document.getElementById('avatar') as HTMLImageElement
+  const spookyFactElement = document.getElementById('spookyFact') as HTMLParagraphElement
+
+  // function sleep(ms: number) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
+  let c = 0
+  const generateAvatar = async () => {
+    if(c === 1) return
+
+    const response = await fetch('/api/facts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        summary:summaryValue
+      })
+    })
+    const data = await response.json()
+    const { content, bgPrompt, mask } = data
+    const url = transform({ publicId:publicIdValue, bgPrompt, mask })
+    
+    avatarElement.src = url
+    avatarElement.onload = () => {
+      c++
+      console.log({url,c});
+      spookyFactElement.textContent = content
+      generateAvatar()
+    }
+  }
+
+  await generateAvatar()
+</script>
