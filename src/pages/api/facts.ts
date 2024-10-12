@@ -19,6 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
 		const summary = body.summary
 		const { object } = await generateObject({
 			model: groq('llama-3.1-70b-versatile'),
+			temperature: 0.7,
 			schema: CREEPY_SCHEMA,
 			prompt: formatSpookyFactPrompt({
 				summary
