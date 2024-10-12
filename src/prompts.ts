@@ -25,9 +25,23 @@ export const formatSpookyBioPrompt = ({
   Generate:
 
   1. A creepy alias, maximum 3 words.
-  2. A spooky bio, maximum 20 words. Avoid repeating words from the given bio. Use location.
-  3. Eight spooky facts, each maximum 50 words, using the given information. Start each fact with an emoji and end with one too. 
-  Most should be terrifying, and a few can be humorous in a Halloween theme. At least one word in each fact should be in uppercase.
-  
-  Make sure to be creative and avoid repetition in the facts.`
+  2. A spooky bio, maximum 20 words. Avoid repeating words from the given bio. Use location.`
+}
+
+export const formatSpookyFactPrompt = ({
+	summary
+}: {
+	summary: string
+}) => {
+	return `Given the following summary from a haunted individual:
+${summary}
+
+Generate:
+
+A spooky fact with a maximum of 40 words. Start each fact with an emoji and end with one too.
+It should be terrifying or humorous in a Halloween theme. At least one word should be in UPPERCASE.
+Once you generate the spooky fact, create the following prompts based on the fact:
+
+1. Background prompt: Use four words to describe an eerie scene related to the fact.
+2. Mask: Use three words to describe an object that should replace the face of the user, keeping in mind the Halloween theme.`
 }
