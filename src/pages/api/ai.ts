@@ -4,6 +4,7 @@ import { generateObject } from 'ai'
 import { fetchUserData, fetchUserRepos, getLanguagesFromRepositories } from '@/services/github'
 import { z } from 'zod'
 import { formatSpookyBioPrompt } from '@/prompts'
+import { uploadImage } from '@/services/image'
 
 const groq = createOpenAI({
 	baseURL: 'https://api.groq.com/openai/v1',
@@ -29,6 +30,27 @@ export const GET: APIRoute = async ({ params }) => {
 		)
 	}
 	const userData = await fetchUserData({ username })
+
+	if (!userData) {
+		return new Response(
+			JSON.stringify({
+				data: null
+			}),
+			{ status: 400 }
+		)
+	}
+	const { name, bio, location, login, githubUrl, avatarUrl, id } = userData
+
+	const publicId = await uploadImage({ imageUrl: avatarUrl, userId: String(id) })
+
+	if (!publicId || publicId.error) {
+		return new Response(
+			JSON.stringify({
+				data: publicId?.error ?? null
+			}),
+			{ status: 400 }
+		)
+	}
 	const languageRepos = await getLanguagesFromRepositories({ username })
 	const userRepos = await fetchUserRepos({ username, numberOfRepos: 3 })
 
@@ -52,7 +74,6 @@ export const GET: APIRoute = async ({ params }) => {
 		return `- ${name} with stars: ${stars}\n${acc}`
 	}, '')
 
-	const { name, bio, location, login, githubUrl, avatarUrl } = userData
 	const { object } = await generateObject({
 		model: groq('llama-3.1-70b-versatile'),
 		schema: CREEPY_SCHEMA,
@@ -76,7 +97,8 @@ export const GET: APIRoute = async ({ params }) => {
 				location,
 				avatarUrl,
 				topLanguages,
-				featuredProjects
+				featuredProjects,
+				publicId: publicId.data
 			}
 		})
 	)
