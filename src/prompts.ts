@@ -42,6 +42,6 @@ A spooky fact with a maximum of 40 words. Start each fact with an emoji and end 
 It should be terrifying or humorous in a Halloween theme. At least one word should be in UPPERCASE.
 Once you generate the spooky fact, create the following prompts based on the fact:
 
-1. Background prompt: Use four words to describe an eerie scene related to the fact.
+1. Background prompt: Use three words to describe an eerie scene related to the fact.
 2. Mask: Use three words to describe an object that should replace the face of the user, keeping in mind the Halloween theme.`
 }
