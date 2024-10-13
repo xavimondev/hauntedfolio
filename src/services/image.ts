@@ -33,7 +33,7 @@ export const uploadImage = async ({ imageUrl, userId }: { imageUrl: string; user
 	}
 }
 
-export const eagerTransformation = async ({
+export const languagesAssetsTransformation = async ({
 	publicId,
 	color
 }: { publicId: string; color: string }) => {

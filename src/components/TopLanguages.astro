@@ -1,6 +1,6 @@
 ---
 import { getRandomElement } from '@/helpers/getRandomElement'
-import { eagerTransformation } from '@/services/image'
+import { languagesAssetsTransformation } from '@/services/image'
 
 type Language = {
 	name: string
@@ -22,7 +22,7 @@ const topThreeLanguages = [languages[1], languages[0], languages[2]]
 const randomSticker = getRandomElement({ list: STICKERS_IDS })
 
 const listOfPromises = topThreeLanguages.map(async ({ name, color }) => {
-	const url = await eagerTransformation({ publicId: randomSticker, color })
+	const url = await languagesAssetsTransformation({ publicId: randomSticker, color })
 	return {
 		name,
 		color,
