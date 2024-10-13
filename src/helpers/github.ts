@@ -40,17 +40,21 @@ export const getTopRepositories = ({
 }
 
 export const getTopLanguages = ({ repositories }: { repositories: GitRepositoryLanguage[] }) => {
-	const data: Record<string, number> = repositories
+	const data = repositories
 		.flatMap((rep: GitRepositoryLanguage) => rep.languages.edges)
-		.reduce((acc: Record<string, number>, lang: EdgeLanguage) => {
-			const { name } = lang.node
-			acc[name] = (acc[name] ?? 0) + lang.size
+		.reduce((acc: Array<{ name: string; size: number; color: string }>, lang: EdgeLanguage) => {
+			const { name, color } = lang.node
+			const elem = acc.find((el) => el.name === name)
+			if (elem) {
+				elem.size += lang.size
+			} else {
+				acc.push({ name, size: lang.size, color })
+			}
+
 			return acc
-		}, {})
+		}, [])
 	// Retrieve the first three languages from the object data
-	const topLanguages = Object.entries(data)
-		.sort((a, b) => b[1] - a[1])
-		.slice(0, 3)
+	const topLanguages = data.sort((a, b) => b.size - a.size).slice(0, 3)
 
 	return topLanguages
 }

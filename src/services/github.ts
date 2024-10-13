@@ -63,9 +63,7 @@ export const fetchUserRepos = async ({
 	}
 }
 
-export const getLanguagesFromRepositories = async ({
-	username
-}: { username: string }): Promise<[string, number][] | undefined> => {
+export const getLanguagesFromRepositories = async ({ username }: { username: string }) => {
 	try {
 		const languagesRepositories: GitRepositoryLanguage[] = []
 		let hasNextPage = true

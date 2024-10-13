@@ -1,0 +1,48 @@
+---
+import { getRandomElement } from '@/helpers/getRandomElement'
+import { eagerTransformation } from '@/services/image'
+
+type Language = {
+	name: string
+	color: string
+}
+
+interface Props {
+	topLanguages: Language[]
+}
+
+const STICKERS_IDS = ['stickers/witch-pumpkin', 'stickers/pumpkin-candle']
+
+const { topLanguages } = Astro.props
+
+// Let's change the order of the languages for UI purposes
+const languages = [...topLanguages]
+const topThreeLanguages = [languages[1], languages[0], languages[2]]
+
+const randomSticker = getRandomElement({ list: STICKERS_IDS })
+
+const listOfPromises = topThreeLanguages.map(async ({ name, color }) => {
+	const url = await eagerTransformation({ publicId: randomSticker, color })
+	return {
+		name,
+		color,
+		url
+	}
+})
+
+const data = await Promise.all(listOfPromises)
+---
+
+<section class="content-center h-screen w-screen p-8">
+	<h2 class="w-full mx-auto max-w-7xl text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading">Top Languages</h2>
+	<div class="w-full mx-auto max-w-7xl flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
+		{data.map(({ name, color, url }, index) => (
+			<div class='flex flex-col items-center gap-1' style={`transform-style: preserve-3d;transform: translateZ(${index === 1 ? '200' : '0'}px);`}> 
+				<img src={url} alt={`${randomSticker} of ${name}`} class="aspect-square" style={`filter: drop-shadow(0 0 4.3rem ${color});`}/>
+				<div class="p-6 bg-neutral-950 flex gap-2 rounded-lg border-2 border-[var(--border-color)]" style={`--border-color: ${color};`}>
+					<p class={`text-3xl md:text-4xl xl:text-6xl text-[color:var(--text-color)] font-bold font-subtitle`} style={`--text-color: ${color};`}>{name}</p>
+				</div>
+			</div>
+		))}
+	</div>
+</section>

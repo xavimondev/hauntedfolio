@@ -46,6 +46,7 @@ query ($login: String!, $after: String) {
             size
             node {
               name
+              color
             }
           }
         }

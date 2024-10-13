@@ -63,11 +63,7 @@ export const GET: APIRoute = async ({ params }) => {
 		)
 	}
 
-	const topLanguages = languageRepos
-		.map(([language]) => {
-			return language
-		})
-		.join(', ')
+	const topLanguages = languageRepos.map((language) => language.name).join(', ')
 
 	const featuredProjects = userRepos.reduce((acc, repo) => {
 		const { name, stars } = repo
@@ -98,7 +94,8 @@ export const GET: APIRoute = async ({ params }) => {
 				avatarUrl,
 				topLanguages,
 				featuredProjects,
-				publicId: publicId.data
+				publicId: publicId.data,
+				languageRepos
 			}
 		})
 	)

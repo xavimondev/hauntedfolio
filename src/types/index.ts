@@ -128,4 +128,5 @@ export interface EdgeLanguage {
 
 export interface NodeLanguage {
 	name: string
+	color: string
 }

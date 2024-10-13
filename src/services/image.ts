@@ -32,3 +32,18 @@ export const uploadImage = async ({ imageUrl, userId }: { imageUrl: string; user
 		}
 	}
 }
+
+export const eagerTransformation = async ({
+	publicId,
+	color
+}: { publicId: string; color: string }) => {
+	try {
+		const res = await cloudinary.uploader.explicit(publicId, {
+			eager: [{ width: 400, height: 400, effect: 'colorize:80', color }],
+			type: 'upload'
+		})
+		return res.eager[0].url
+	} catch (error) {
+		console.error(error)
+	}
+}
