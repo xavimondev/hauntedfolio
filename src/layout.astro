@@ -4,6 +4,7 @@ import '@fontsource/crimson-text'
 import '@fontsource-variable/roboto-mono'
 import creepsterWoff2 from '@fontsource/creepster/files/creepster-latin-400-normal.woff2?url'
 import robotoMonoWoff2 from '@fontsource-variable/roboto-mono/files/roboto-mono-latin-wght-normal.woff2?url'
+import GrainyBackground from './components/GrainyBackground.astro'
 // import crimsonWoff2 from '@fontsource/crimson-text/files/crimson-text-latin-400-normal.woff2?url'
 ---
 
@@ -16,7 +17,8 @@ import robotoMonoWoff2 from '@fontsource-variable/roboto-mono/files/roboto-mono-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Haunted Folio 👻</title>
   </head>
-  <body class="bg-[#1C1328]">
+  <body class="bg-[radial-gradient(circle,_rgba(30,26,26,1)_0%,_rgba(0,0,0,1)_100%)]">
+    <GrainyBackground />
     <main>
       <slot/>
     </main>
