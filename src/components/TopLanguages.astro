@@ -33,9 +33,9 @@ const listOfPromises = topThreeLanguages.map(async ({ name, color }) => {
 const data = await Promise.all(listOfPromises)
 ---
 
-<section class="content-center p-8">
-	<h2 class="w-full mx-auto max-w-7xl text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading">Top Languages</h2>
-	<div class="w-full mx-auto max-w-7xl flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
+<section class="content-center p-8 size-full mx-auto max-w-4xl lg:max-w-7xl mt-36 lg:mt-44">
+	<h2 class="w-full text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading animate-flicker">Top Languages</h2>
+	<div class="w-full flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
 		{data.map(({ name, color, url }, index) => (
 			<div class='flex flex-col items-center gap-1' style={`transform-style: preserve-3d;transform: translateZ(${index === 1 ? '200' : '0'}px);`}> 
 				<img src={url} alt={`${randomSticker} of ${name}`} class="aspect-square" style={`filter: drop-shadow(0 0 4.3rem ${color});`}/>

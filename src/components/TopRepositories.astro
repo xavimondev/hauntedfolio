@@ -43,7 +43,7 @@ const listOfPromises = topRepositories.map(
 
 const data = await Promise.all(listOfPromises)
 ---
-<section class="content-center p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
+<section class="content-center p-8 size-full mx-auto max-w-4xl lg:max-w-7xl mt-36 lg:mt-44">
 	<h2 class="w-full text-4xl sm:text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading animate-flicker">Top Repositories</h2>
 	<div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-between items-center gap-4 mt-8 md:mt-12 xl:mt-16">
 		{data.map(({project, url }) => (
