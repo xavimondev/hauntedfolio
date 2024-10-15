@@ -1,6 +1,6 @@
 ---
 import { getRandomElement } from '@/helpers/getRandomElement'
-import { languagesAssetsTransformation } from '@/services/image'
+import { generatePumpkin } from '@/services/image'
 
 type Language = {
 	name: string
@@ -22,7 +22,7 @@ const topThreeLanguages = [languages[1], languages[0], languages[2]]
 const randomSticker = getRandomElement({ list: STICKERS_IDS })
 
 const listOfPromises = topThreeLanguages.map(async ({ name, color }) => {
-	const url = await languagesAssetsTransformation({ publicId: randomSticker, color })
+	const url = await generatePumpkin({ publicId: randomSticker, color })
 	return {
 		name,
 		color,
@@ -33,7 +33,7 @@ const listOfPromises = topThreeLanguages.map(async ({ name, color }) => {
 const data = await Promise.all(listOfPromises)
 ---
 
-<section class="content-center h-screen w-screen p-8">
+<section class="content-center p-8">
 	<h2 class="w-full mx-auto max-w-7xl text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading">Top Languages</h2>
 	<div class="w-full mx-auto max-w-7xl flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
 		{data.map(({ name, color, url }, index) => (

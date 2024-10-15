@@ -33,10 +33,7 @@ export const uploadImage = async ({ imageUrl, userId }: { imageUrl: string; user
 	}
 }
 
-export const languagesAssetsTransformation = async ({
-	publicId,
-	color
-}: { publicId: string; color: string }) => {
+export const generatePumpkin = async ({ publicId, color }: { publicId: string; color: string }) => {
 	try {
 		const res = await cloudinary.uploader.explicit(publicId, {
 			eager: [{ width: 400, height: 400, effect: 'colorize:80', color }],
