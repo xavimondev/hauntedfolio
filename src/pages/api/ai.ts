@@ -52,7 +52,7 @@ export const GET: APIRoute = async ({ params }) => {
 		)
 	}
 	const languageRepos = await getLanguagesFromRepositories({ username })
-	const userRepos = await fetchUserRepos({ username, numberOfRepos: 3 })
+	const userRepos = await fetchUserRepos({ username, numberOfRepos: 6 })
 
 	if (!userData || !languageRepos || !userRepos) {
 		return new Response(
@@ -83,6 +83,11 @@ export const GET: APIRoute = async ({ params }) => {
 		})
 	})
 
+	const topRepositories = userRepos.map((repo) => ({
+		...repo,
+		primaryLanguage: repo.primaryLanguage?.name ?? 'Unknown'
+	}))
+
 	return new Response(
 		JSON.stringify({
 			data: {
@@ -95,7 +100,8 @@ export const GET: APIRoute = async ({ params }) => {
 				topLanguages,
 				featuredProjects,
 				publicId: publicId.data,
-				languageRepos
+				languageRepos,
+				topRepositories
 			}
 		})
 	)

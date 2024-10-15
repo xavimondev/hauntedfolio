@@ -1,0 +1,56 @@
+---
+import { generateFarewellMessage } from '@/services/ai'
+import { generateTombstone } from '@/services/image'
+
+interface Repository {
+	name: string
+	stars: number
+	pullRequests: number
+	forks: number
+	primaryLanguage: string
+}
+
+interface Props {
+	topRepositories: Repository[]
+}
+
+const { topRepositories } = Astro.props
+
+const publicId = 'stickers/tombstone'
+const listOfPromises = topRepositories.map(
+	async ({ name, stars, primaryLanguage, pullRequests, forks }) => {
+		const farewellMessage = await generateFarewellMessage({
+			repositoryName: name,
+			numStarts: stars,
+			programmingLanguage: primaryLanguage
+		})
+
+		const url = await generateTombstone({
+			publicId,
+			name,
+			farewellMessage,
+			stars,
+			forks,
+			pullRequests
+		})
+
+		return {
+			project: name,
+			url
+		}
+	}
+)
+
+const data = await Promise.all(listOfPromises)
+---
+<section class="content-center p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
+	<h2 class="w-full text-4xl sm:text-6xl lg:text-8xl font-bold text-gray-300/90 font-heading animate-flicker">Top Repositories</h2>
+	<div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-between items-center gap-4 mt-8 md:mt-12 xl:mt-16">
+		{data.map(({project, url }) => (
+      <img 
+				src={url} 
+				alt={`A tombstone picture of ${project}`} 
+				class="aspect-square size-full md:size-80 xl:size-[380px] transition duration-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:drop-shadow-[0_0_20px_#457b9d] animate-float"/> 
+		))}
+	</div>
+</section>
