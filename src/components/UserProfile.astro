@@ -1,0 +1,32 @@
+---
+import { BG_PROMPTS, MASK_PROMPTS } from '@/constants'
+import { getRandomElement } from '@/helpers/getRandomElement'
+import { transform } from '@/services/transformations'
+
+interface Props {
+	alias: string
+	bio: string
+	publicId: string
+}
+
+const { bio, alias, publicId } = Astro.props
+
+const randomBGPrompt = getRandomElement({ list: BG_PROMPTS })
+const randomMaskPrompt = getRandomElement({ list: MASK_PROMPTS })
+
+const avatarUrl = transform({
+	publicId,
+	bgPrompt: randomBGPrompt,
+	mask: randomMaskPrompt
+})
+---
+
+<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
+	<h2 class="w-full text-5xl sm:text-6xl lg:text-8xl font-bold text-red-300/90 font-heading animate-flicker">{alias}</h2>
+	<div class="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-8 mt-8 lg:mt-12 xl:mt-16">
+    <img src={avatarUrl} alt="Avatar" class="size-72 md:size-[300px] lg:size-[500px] rounded-md aspect-square border-[5px] border-black bg-orange-200 md:-rotate-2"/>
+		<div class="w-full md:max-w-sm lg:max-w-lg">
+      <p class="font-medium text-[#F0E68C] text-2xl lg:text-4xl font-body md:rotate-2 text-shadow shadow-black">{bio}</p>  
+    </div>
+	</div>
+</section>
