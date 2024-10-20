@@ -1,0 +1,107 @@
+---
+import Heading from '@/components/Heading.astro'
+import Twitter from '@/components/icons/Twitter.astro'
+import Download from '@/components/icons/Download.astro'
+---
+
+<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
+	<Heading title="Spooky Halloween Video!"/>
+	<div class="w-full mt-8 lg:mt-12 xl:mt-16">
+    <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-4">
+      <div class="size-full">
+        <div 
+          class="absolute top-0 left-0 w-full h-full pointer-events-none"
+          style={{
+            backgroundImage: "url('/placeholder.svg?height=20&width=20')",
+            backgroundRepeat: 'repeat',
+            opacity: 0.1
+          }}
+        />
+        <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
+          <video 
+            class="w-full h-full object-cover"
+            controls
+            poster="/placeholder.svg?height=400&width=600"
+            id="video"
+            autoplay
+          >
+            <!-- <source src={videoUrl} type="video/mp4" /> -->
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="w-full md:max-w-md">
+        <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
+          <p class="text-xl md:text-2xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
+          <p class="text-orange-400">Share your GitHub Haunted Summary and let your spooky contributions shine! Use the buttons below to spread the Halloween spirit on social media.</p>
+          <div class="flex mt-5 justify-between">
+            <button 
+              class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 hover:rotate-2 inline-flex items-center"
+              aria-label="Share on Twitter"
+              id="shareTwitter"
+            >
+              <Twitter class="mr-2 size-5" />
+              Share on Twitter
+            </button>
+            <button 
+              id="download"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 hover:-rotate-2 inline-flex items-center"
+              aria-label="Download Video"
+            >
+              <Download class="mr-2 size-5" />
+              Download Video
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+</section>
+
+<script>
+  import templateManifest from '@/data/manifest.json'; 
+  import { pollForProcessingImage } from '@cloudinary-util/util';
+
+  let VIDEO_LINK = ''
+
+  const generateVideo = async () => {
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        manifest: templateManifest
+      })
+    })
+
+    const {results: video} = await response.json()
+    const videoUrl = video.secure_url.replace('.clt', '.mp4');
+
+    const videoElement = document.querySelector('#video') as HTMLVideoElement
+
+    if (await pollForProcessingImage({ src: videoUrl }) ) {
+      console.log('Video ready', videoUrl);
+      videoElement.src = videoUrl
+      VIDEO_LINK = videoUrl
+    }
+  }
+
+  const downloadButton = document.querySelector('#download') as HTMLButtonElement
+  const shareTwitterButton = document.querySelector('#shareTwitter') as HTMLButtonElement
+  
+  shareTwitterButton.addEventListener('click', () => {
+    generateVideo()  
+  })
+
+  downloadButton.addEventListener('click', () => {
+    if(!VIDEO_LINK) return
+
+    // http://res.cloudinary.com/demo/image/upload/fl_attachment:new_sample/v1362144095/sample_attachment.jpg
+    const a = document.createElement("a")
+    a.href = VIDEO_LINK.replace('/upload/', '/upload/fl_attachment:my_summary/')
+    a.download = "my_summary.mp4"
+    a.click() 
+  })
+ 
+</script>

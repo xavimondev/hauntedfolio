@@ -14,6 +14,7 @@
     "@ai-sdk/openai": "0.0.66",
     "@astrojs/check": "0.9.4",
     "@astrojs/tailwind": "5.1.1",
+    "@cloudinary-util/util": "4.0.0",
     "@fontsource-variable/roboto-mono": "5.1.0",
     "@fontsource/creepster": "5.1.0",
     "@fontsource/crimson-text": "5.1.0",
@@ -21,11 +22,13 @@
     "astro": "4.15.12",
     "astro-cloudinary": "1.1.0",
     "cloudinary": "2.5.1",
+    "jszip": "3.10.1",
     "tailwindcss": "3.4.13",
     "typescript": "5.6.3",
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.3"
+    "@biomejs/biome": "1.9.3",
+    "@types/node": "22.7.5"
   }
 }

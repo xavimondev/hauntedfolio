@@ -185,3 +185,55 @@ export const generateTombstone = async ({
 		console.error(error)
 	}
 }
+
+export const generateCreepyAvatar = async ({
+	publicId,
+	bgPrompt,
+	maskPrompt
+}: { publicId: string; bgPrompt: string; maskPrompt: string }) => {
+	const res = await cloudinary.uploader.explicit(publicId, {
+		eager: [
+			{
+				width: 350,
+				height: 350,
+				transformation: [
+					{
+						effect: `gen_background_replace:prompt_${bgPrompt}`
+					},
+					{ effect: `gen_replace:from_face;to_${maskPrompt}` }
+				]
+			}
+		],
+		type: 'upload',
+		format: 'avif'
+	})
+
+	return res.eager[0].url
+}
+
+export const generateVideo = async ({
+	buffer,
+	folder,
+	publicId
+}: { buffer: Buffer; folder: string; publicId: string }) => {
+	const results = await new Promise((resolve, reject) => {
+		cloudinary.uploader
+			.upload_stream(
+				{
+					resource_type: 'auto',
+					folder,
+					public_id: publicId
+				},
+				(error: unknown, result: unknown) => {
+					if (result) {
+						resolve(result)
+					} else {
+						reject(error)
+					}
+				}
+			)
+			.end(buffer)
+	})
+
+	return results
+}
