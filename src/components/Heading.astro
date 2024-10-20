@@ -1,0 +1,8 @@
+---
+interface Props {
+	title: string
+}
+
+const { title } = Astro.props
+---
+<h2 class="w-full text-5xl sm:text-6xl lg:text-8xl font-bold text-red-300/90 font-heading animate-flicker">{title}</h2>
