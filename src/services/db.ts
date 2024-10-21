@@ -1,0 +1,40 @@
+import type { SpookyData } from '@/types'
+import { Redis } from '@upstash/redis'
+
+const redis = new Redis({
+	url: import.meta.env.UPSTASH_REDIS_REST_URL,
+	token: import.meta.env.UPSTASH_REDIS_REST_TOKEN
+})
+
+export const getHauntedFolio = async ({
+	userId
+}: { userId: string }): Promise<SpookyData | undefined> => {
+	const data = (await redis.hgetall(`user:${userId}`)) as unknown
+	return data as SpookyData | undefined
+}
+
+export const saveHauntedFolio = async ({ data, isNew }: { data: unknown; isNew: boolean }) => {
+	// @ts-ignore
+	await redis.hset(`user:${data.login}`, data, {
+		ex: 60 * 60 * 24 // 1 day
+	})
+
+	if (isNew) {
+		// @ts-ignore
+		await redis.expire(`user:${data.login}`, 60 * 60 * 12) // 1 day
+	}
+}
+
+export const updateFieldHauntedFolio = async ({
+	userId,
+	field,
+	value
+}: {
+	userId: string
+	field: string
+	value: unknown
+}) => {
+	await redis.hset(`user:${userId}`, {
+		[field]: value
+	})
+}

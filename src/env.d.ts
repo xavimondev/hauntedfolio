@@ -6,6 +6,8 @@ interface ImportMetaEnv {
 	readonly PUBLIC_CLOUDINARY_CLOUD_NAME: string
 	readonly PUBLIC_CLOUDINARY_API_KEY: string
 	readonly CLOUDINARY_API_SECRET: string
+	readonly UPSTASH_REDIS_REST_URL: string
+	readonly UPSTASH_REDIS_REST_TOKEN: string
 }
 
 interface ImportMeta {

@@ -130,3 +130,23 @@ export interface NodeLanguage {
 	name: string
 	color: string
 }
+
+export interface SpookyData extends UserData {
+	summary: string
+	topRepositories: {
+		name: string
+		stars: number
+		pullRequests: number
+		forks: number
+		primaryLanguage: string
+	}[]
+	topLanguages: {
+		name: string
+		size: number
+		color: string
+	}[]
+	spookyAlias?: string
+	spookyBio?: string
+	spookyIntro?: string
+	spookyAvatarUrl?: string
+}

@@ -1,3 +1,4 @@
+import { USER_PATH_CLD } from '@/constants'
 import { v2 as cloudinary } from 'cloudinary'
 
 cloudinary.config({
@@ -6,14 +7,15 @@ cloudinary.config({
 	api_secret: import.meta.env.CLOUDINARY_API_SECRET
 })
 
-export const uploadImage = async ({ imageUrl, userId }: { imageUrl: string; userId: string }) => {
+export const uploadImage = async ({
+	githubAvatarUrl,
+	username
+}: { githubAvatarUrl: string; username: string }) => {
 	try {
-		const response = await cloudinary.uploader.upload(imageUrl, {
-			// I use userId as the folder name because user sometimes change their username,
-			// so in order to avoid conflicts, I use this approach
-			asset_folder: userId,
+		const response = await cloudinary.uploader.upload(githubAvatarUrl, {
+			asset_folder: `${USER_PATH_CLD}/${username}`,
 			format: 'png',
-			public_id: userId
+			public_id: username
 		})
 
 		const imagePublicId = response.public_id

@@ -1,31 +1,13 @@
-export const formatSpookyBioPrompt = ({
-	bio,
-	username,
-	name,
-	topLanguages,
-	featuredProjects,
-	location
-}: {
-	bio: string | null
-	username: string
-	name: string
-	topLanguages: string
-	featuredProjects: string
-	location: string | null
-}) => {
-	return `Given the following information:
+export const formatSpookyBioPrompt = ({ summary }: { summary: string }) => {
+	return `Given the following summary:
 
-  Username: ${username}
-  Name: ${name}
-  ${bio ? `Bio: ${bio}` : ''}
-  ${location ? `Location: ${location}` : ''}
-  Top Languages: ${topLanguages}
-  Featured Projects: ${featuredProjects}
+  ${summary}
 
   Generate:
 
   1. A creepy alias, maximum 3 words.
-  2. A spooky bio, maximum 20 words. Avoid repeating words from the given bio. Use location.`
+  2. A spooky introduction, maximum 20 words. Avoid repeating words from the given bio. Use location.
+	3. A creepy biography. maximun 40 words. Be as creepy as possible.`
 }
 
 export const formatSpookyFactPrompt = ({

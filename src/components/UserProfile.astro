@@ -1,32 +1,44 @@
 ---
-import { BG_PROMPTS, MASK_PROMPTS } from '@/constants'
-import { getRandomElement } from '@/helpers/getRandomElement'
-import { transform } from '@/services/transformations'
-
 interface Props {
-	alias: string
-	bio: string
-	publicId: string
+	username: string
+	githubUrl: string
+	spookyAlias?: string
+	spookyBio?: string
+	spookyAvatarUrl?: string
 }
 
-const { bio, alias, publicId } = Astro.props
-
-const randomBGPrompt = getRandomElement({ list: BG_PROMPTS })
-const randomMaskPrompt = getRandomElement({ list: MASK_PROMPTS })
-
-const avatarUrl = transform({
-	publicId,
-	bgPrompt: randomBGPrompt,
-	mask: randomMaskPrompt
-})
+const { username, githubUrl, spookyAlias, spookyBio, spookyAvatarUrl } = Astro.props
 ---
 
-<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
-	<h2 class="w-full text-5xl sm:text-6xl lg:text-8xl font-bold text-red-300/90 font-heading animate-flicker">{alias}</h2>
-	<div class="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-8 mt-8 lg:mt-12 xl:mt-16">
-    <img src={avatarUrl} alt="Avatar" class="size-72 md:size-[300px] lg:size-[500px] rounded-md aspect-square border-[5px] border-black bg-orange-200 md:-rotate-2"/>
-		<div class="w-full md:max-w-sm lg:max-w-lg">
-      <p class="font-medium text-[#F0E68C] text-2xl lg:text-4xl font-body md:rotate-2 text-shadow shadow-black">{bio}</p>  
-    </div>
+<div class:list={['p-8 size-full mx-auto max-w-4xl lg:max-w-7xl',!spookyAlias ? 'hidden' : 'block']} id="userCreepyProfile">
+	<div class="relative bg-black px-4 py-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] -rotate-2 hover:rotate-0 transition duration-200 mb-16 sm:mb-20">
+		<h1 class="text-4xl sm:text-5xl lg:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase" id="userCreepyAlias">{spookyAlias ?? ''}</h1>
+		<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
 	</div>
-</section>
+	<div class="w-full flex flex-col md:flex-row justify-between items-center gap-8 md:-rotate-2">
+		<div class="size-72 md:size-[300px] lg:size-[500px] p-4 bg-purple-200 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-lg transform flex flex-col items-center justify-center">
+			{
+				spookyAvatarUrl ? 
+				<img 
+					src={spookyAvatarUrl}
+					alt="Creepy Avatar" 
+					class="size-48 lg:size-[400px] rounded-md aspect-square border-4 border-black bg-orange-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" 
+				/> 
+				: 
+				<img 
+					alt="Creepy Avatar" 
+					class="size-48 lg:size-[400px] rounded-md aspect-square border-4 border-black bg-orange-200 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" 
+					id="userCreepyAvatar"
+				/>
+			}
+			
+			<div class="mt-4 flex flex-col gap-2">
+				<a href={githubUrl} class="text-xl sm:text-2xl font-bold text-purple-800 text-center hover:underline hover:underline-offset-2 hover:decoration-purple-900" rel="noreferrer noopener" target="_blank">{username} 👻</a>
+      	<!-- <p class="text-sm text-purple-600 text-center"></p> -->
+			</div>
+    </div>
+		<div class="w-full md:max-w-sm lg:max-w-lg">
+			<p class="font-medium text-[#F0E68C] text-2xl lg:text-4xl font-body md:rotate-2 text-shadow shadow-black" id="userCreepyBio">{spookyBio ?? ''}</p>
+		</div>
+	</div>
+</div> 

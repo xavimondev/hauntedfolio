@@ -1,67 +1,175 @@
 ---
-import Loader from './Loader.astro'
+import { getRandomElement } from '@/helpers/getRandomElement'
+import { INTRODUCTIONS } from '@/constants'
+import UserProfile from '@/components/UserProfile.astro'
 
 interface Props {
+	username: string
 	avatarUrl: string
-	bio: string
 	summary: string
-	publicId: string
+	githubUrl: string
+	spookyAlias?: string
+	spookyBio?: string
+	spookyAvatarUrl?: string
 }
 
-const { avatarUrl, bio, summary, publicId } = Astro.props
+const { summary, avatarUrl, username, githubUrl, spookyAlias, spookyBio, spookyAvatarUrl } =
+	Astro.props
+
+const initialIntro = getRandomElement({ list: INTRODUCTIONS })
 ---
 
-<section class="content-center h-screen w-screen">
-  <textarea name="summary" id="summary" class="hidden">{summary}</textarea>
-  <input name="publicId" id="publicId" class="hidden" value={publicId} />
-  <div class="w-full mx-auto max-w-4xl flex flex-col justify-center items-center gap-8">
-    <img src={avatarUrl} alt="Sppooky foto" class="rounded-full size-72 xl:size-96 border-[5px] border-orange-500" id="avatar">
-    <div class="h-32">
-      <p class="text-2xl lg:text-4xl text-green-400 font-medium text-center font-body" id="spookyFact">😏{bio}🤩</p> 
-    </div>
-    <Loader />
-  </div>
+<section class="content-center min-h-dvh w-screen" data-alias={spookyAlias}>
+  <!-- <div class="fixed left-0 top-0 -z-10 aspect-video h-[100vh] w-screen">
+    <video
+      id="videoPlayer"
+      autoplay
+      muted
+      loop
+      class="aspect-video size-full overflow-hidden object-cover opacity-0 transition-opacity duration-500"
+      style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, transparent);"
+      playsinline
+      src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4'
+    >
+      <source type="video/mp4" src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4' />
+    </video>
+  </div> -->
+  {!spookyAlias 
+    && 
+    <>
+      <textarea name="summary" id="summary" class="hidden">{summary}</textarea>
+      <input name="avatarUrl" id="avatarUrl" class="hidden" value={avatarUrl} />
+      <input name="username" id="username" class="hidden" value={username} />  
+      <div class="w-full mx-auto max-w-4xl flex flex-col justify-center items-center gap-8" id="initialScreen">
+        <p class="text-2xl lg:text-4xl text-red-500 font-medium text-center font-body" id="spookyFact">{initialIntro}</p> 
+      </div>
+    </>
+  }
+  <UserProfile username={username} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
 </section>
-<!-- define:vars={{ summary, avatarUrl }} -->
+
 <script>
+  // TODO: add dynamic import
+  import { BG_PROMPTS, FINAL_MESSAGES, HALLOWEEN_FACTS, INTRODUCTIONS, MASK_PROMPTS } from '@/constants'
+  import { getRandomElement } from '@/helpers/getRandomElement'
   import { transform } from '@/services/transformations'
-  const summary = document.getElementById('summary') as HTMLTextAreaElement
-  const publicId = document.getElementById('publicId') as HTMLInputElement
+  import { pollForProcessingImage } from '@cloudinary-util/util';
 
-  const summaryValue = summary.value
-  const publicIdValue = publicId.value
-  const avatarElement = document.getElementById('avatar') as HTMLImageElement
-  const spookyFactElement = document.getElementById('spookyFact') as HTMLParagraphElement
-  const progressBarElement = document.getElementById('progress-bar') as HTMLDivElement
-  const percentageElement = document.getElementById('percentage') as HTMLParagraphElement
+  const aliasElement = document.querySelector("[data-alias]")?.getAttribute('data-alias') ?? ''
+  
+  if(!aliasElement){
+    const avatarUrlElement = document.querySelector('#avatarUrl') as HTMLInputElement
+    const usernameElement = document.querySelector('#username') as HTMLInputElement
+    const spookyFactElement = document.querySelector('#spookyFact') as HTMLParagraphElement
+    // const videoEl = document.querySelector("#video-player") as HTMLVideoElement
+    const summary = document.querySelector('#summary') as HTMLTextAreaElement
+    const summaryValue = summary.value
+    
+    let TOTAL_INTROS = 0
+    const MAX_INTROS = 2
 
-  let c = 0
-  const MAX_FACTS = 5
-  const generateAvatar = async () => {
-    if(c === MAX_FACTS) return
+    let intervalId: any
+    intervalId = setInterval(() => {
+      let text = ''
 
-    const response = await fetch('/api/facts', {
+      if(TOTAL_INTROS < MAX_INTROS){
+        text = getRandomElement({ list: INTRODUCTIONS })
+        spookyFactElement.textContent = text
+        TOTAL_INTROS++
+        return
+      }
+
+      text = getRandomElement({ list: HALLOWEEN_FACTS })
+      spookyFactElement.textContent = text
+      
+    },3000)
+
+    const stopInterval = () => {
+      clearInterval(intervalId)
+      intervalId = null
+    }
+
+    const response = await fetch('/api/bio', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        summary:summaryValue
+        summary: summaryValue
       })
     })
     const data = await response.json()
-    const { content, bgPrompt, mask } = data
-    const url = transform({ publicId:publicIdValue, bgPrompt, mask })
+    const { alias, intro, bio } = data
+    const bgPrompt = getRandomElement({ list: BG_PROMPTS })
+    const mask = getRandomElement({ list: MASK_PROMPTS })
     
-    avatarElement.src = url
-    avatarElement.onload = () => {
-      c++
-      spookyFactElement.textContent = content
-      generateAvatar()
-      progressBarElement.style.width = `${(c/MAX_FACTS)*100}%`
-      percentageElement.textContent = `${((c/MAX_FACTS)*100).toFixed()}%`
+    // Uploading the avatar image to Cloudinary
+    const uploadResponse = await fetch('/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ avatarUrl: avatarUrlElement.value, username: usernameElement.value })
+    })
+
+    const uploadData = await uploadResponse.json()
+    if(!uploadData || !uploadData.publicId){
+      console.error('Error uploading image')
+    }else {
+      const { publicId } = uploadData
+    
+      // Generating creepy avatar
+      const imageUrl = transform({ publicId: publicId, bgPrompt, mask })
+    
+      // console.log({alias, intro, bio, imageUrl, publicId});
+    
+      if (await pollForProcessingImage({ src: imageUrl }) ) {
+        stopInterval()
+    
+        const finalMessage = getRandomElement({ list: FINAL_MESSAGES })
+        spookyFactElement.textContent = finalMessage
+    
+        // videoEl.play()
+        // Adding details to the user profile
+        const userCreepyAlias = document.querySelector('#userCreepyAlias') as HTMLHeadingElement
+        const initialScreen = document.querySelector('#initialScreen') as HTMLHeadingElement
+        const userCreepyProfile = document.querySelector('#userCreepyProfile') as HTMLDivElement
+        const userCreepyBio = document.querySelector('#userCreepyBio') as HTMLParagraphElement
+        const useCreepyAvatar = document.querySelector('#userCreepyAvatar') as HTMLImageElement
+    
+        userCreepyAlias.textContent = alias
+        userCreepyBio.textContent = bio
+        useCreepyAvatar.src = imageUrl
+        
+        setTimeout(() => {
+          initialScreen.style.display = 'none'
+          userCreepyProfile.style.display = 'block'
+        },1000)
+
+        // Updating spooky data in database
+        // console.log('Image ready', imageUrl);
+        const responseDB = await fetch('/api/save-details', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: usernameElement.value,
+            alias,
+            bio,
+            spookyAvatar: imageUrl,
+            intro
+          })
+        })
+
+        const dataDB = await responseDB.json()
+        if(!dataDB.ok){
+          console.error('Error saving spooky data')
+        }
+        // else {
+        //   console.log('dataDB', dataDB)
+        // }
+      }
     }
   }
-
-  await generateAvatar()
 </script>
