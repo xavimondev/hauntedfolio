@@ -154,4 +154,8 @@ export interface SpookyData extends UserData {
 		color: string
 		url: string
 	}[]
+	spookyTopRepositories?: {
+		project: string
+		url: string
+	}[]
 }

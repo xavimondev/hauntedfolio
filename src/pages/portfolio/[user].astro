@@ -77,7 +77,8 @@ const {
 	spookyAlias,
 	spookyBio,
 	spookyAvatarUrl,
-	spookyLanguages
+	spookyLanguages,
+	spookyTopRepositories
 } = spookyData
 ---
 
@@ -85,7 +86,7 @@ const {
 		<>
     	<Introduction avatarUrl={avatarUrl} summary={summary} username={login} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
 			<TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>
-			{/*<TopRepositories topRepositories={topRepositories} client:visible/> */}
+			<TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>
 			{/* <Share/> */}
   	</H>
 	}
