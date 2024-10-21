@@ -25,7 +25,7 @@ let data = spookyLanguages
 const STICKERS_IDS = ['stickers/witch-pumpkin', 'stickers/pumpkin-candle']
 const randomSticker = getRandomElement({ list: STICKERS_IDS })
 
-if (!spookyLanguages) {
+if (!data) {
 	// Let's change the order of the languages for UI purposes
 	const languages = [...topLanguages]
 	const topThreeLanguages = [languages[1], languages[0], languages[2]]
@@ -51,7 +51,7 @@ if (!spookyLanguages) {
 		<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
 	</div>
 	<div class="w-full flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
-		{data && data.map(({ name, color, url }, index) => (
+		{data.map(({ name, color, url }, index) => (
 			<div class='flex flex-col items-center gap-1' style={`transform-style: preserve-3d;transform: translateZ(${index === 1 ? '200' : '0'}px);`}> 
 				<img src={url} alt={`${randomSticker} of ${name}`} class="aspect-square" style={`filter: drop-shadow(0 0 4.3rem ${color});`}/>
 				<div class="p-6 bg-neutral-950 flex gap-2 rounded-lg border-2 border-[var(--border-color)]" style={`--border-color: ${color};`}>
