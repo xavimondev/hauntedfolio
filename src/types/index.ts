@@ -149,4 +149,9 @@ export interface SpookyData extends UserData {
 	spookyBio?: string
 	spookyIntro?: string
 	spookyAvatarUrl?: string
+	spookyLanguages?: {
+		name: string
+		color: string
+		url: string
+	}[]
 }
