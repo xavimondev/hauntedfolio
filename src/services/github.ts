@@ -69,7 +69,7 @@ export const getLanguagesFromRepositories = async ({ username }: { username: str
 		let hasNextPage = true
 		let endCursor = null
 		while (hasNextPage) {
-			const variables = { login: username, after: endCursor }
+			const variables: { login: string; after: number } = { login: username, after: endCursor }
 			const response = await fetch('https://api.github.com/graphql', {
 				method: 'POST',
 				headers: {
