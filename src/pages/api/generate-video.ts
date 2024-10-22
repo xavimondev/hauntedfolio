@@ -91,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
 				const repository = topRepositories.find((tr) => tr.name === id)
 				const { stars, forks, name } = repository ?? {}
 				return {
-					description: `${name} ${description}`,
+					description: `${name} ${description.toLowerCase()}`,
 					details: `With ${stars} stars and ${forks} forks`
 				}
 			})

@@ -1015,6 +1015,7 @@ export const getCursedCreationsTrack = ({
 			width: 350,
 			height: 320,
 			clipDefaults: {
+				textAlign: 'center',
 				fontSize: 20,
 				fontColor: '#4bb0f3',
 				fontType: 'Merriweather',
@@ -1182,6 +1183,7 @@ export const getCursedCreationsTrack = ({
 			width: 360,
 			height: 320,
 			clipDefaults: {
+				textAlign: 'center',
 				fontSize: 20,
 				fontColor: '#4bb0f3',
 				fontType: 'Merriweather',
