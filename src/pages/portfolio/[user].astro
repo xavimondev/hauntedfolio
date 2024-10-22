@@ -83,13 +83,14 @@ const {
 	summaryVideoUrl
 } = spookyData
 
-let ogImage = 'https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/og/haunted-house'
+let ogImage = getCldOgImageUrl({ src: 'og/og-image', width: 1200, height: 630 })
+
 const sticker = 'stickers/pepo'
-const ogs = getRandomElement({ list: ['og/land-moon', 'og/haunted-house'] })
+const randomOg = getRandomElement({ list: ['og/land-moon', 'og/haunted-house'] })
 
 if (spookyBio) {
 	const ogImageUrl = getCldOgImageUrl({
-		src: 'og/land-moon',
+		src: randomOg,
 		overlays: [
 			{
 				text: {
