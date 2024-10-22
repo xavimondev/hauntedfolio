@@ -6,8 +6,8 @@ export const formatSpookyBioPrompt = ({ summary }: { summary: string }) => {
   Generate:
 
   1. A creepy alias, maximum 3 words.
-  2. A spooky intro(introduction) using 45 words.
-	3. A creepy bio(biography) using 20 words. Be as creepy as possible.`
+  2. A spooky intro(introduction) using 55 words.
+	3. A creepy bio(biography) using 35 words. Be as creepy as possible.`
 }
 
 export const formatSpookyFactPrompt = ({
@@ -41,6 +41,8 @@ export const formatFarewellPrompt = ({
 	including the project's name, the programming language it was built with, and its number of stars. 
 	The message should be no longer than 13 words, with a humorous and ironic tone, as if the project 
 	was once promising but failed to live up to expectations.
+	Don't start the message the message with the word "farewell" or "goodbye".
+	Don't mention the project's name in the message.
 	
 	Project name: ${repositoryName}
 	Number of stars: ${numStarts}

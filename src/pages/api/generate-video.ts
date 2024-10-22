@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
 			const cursedProjects =
 				topRepositories?.reduce((acc, repo) => {
 					const { name, primaryLanguage, stars } = repo
-					return `- ${name} built with ${primaryLanguage} and has ${stars} stars\n${acc}`
+					return `- Project: ${name} built with ${primaryLanguage} and has ${stars} stars\n${acc}`
 				}, '') ?? ''
 
 			const cursedLanguages = topLanguages.map((lang) => lang.name).join(', ')
