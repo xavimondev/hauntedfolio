@@ -192,3 +192,6 @@ export const CREEPY_LOCATIONS = [
 export const APP_DOMAIN = import.meta.env.PROD
 	? 'https://hauntedfolio.vercel.app'
 	: 'http://localhost:3000'
+
+export const SEO_DESCRIPTION = 'Turn your Github data into a Hauntedfolio'
+export const SEO_APP_NAME = 'Hauntedfolio'

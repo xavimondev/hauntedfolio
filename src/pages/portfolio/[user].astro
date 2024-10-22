@@ -3,9 +3,11 @@ import Introduction from '@/components/Introduction.astro'
 import Share from '@/components/Share.astro'
 import TopLanguages from '@/components/TopLanguages.astro'
 import TopRepositories from '@/components/TopRepositories.astro'
+import { getRandomElement } from '@/helpers/getRandomElement'
 import Layout from '@/layout.astro'
 import { getHauntedFolio, saveHauntedFolio } from '@/services/db'
 import { fetchUserData, fetchUserRepos, getLanguagesFromRepositories } from '@/services/github'
+import { getCldOgImageUrl } from 'astro-cloudinary/helpers'
 
 const { user } = Astro.params
 
@@ -80,14 +82,79 @@ const {
 	spookyTopRepositories,
 	summaryVideoUrl
 } = spookyData
+
+let ogImage = 'https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/og/haunted-house'
+const sticker = 'stickers/pepo'
+const ogs = getRandomElement({ list: ['og/land-moon', 'og/haunted-house'] })
+
+if (spookyBio) {
+	const ogImageUrl = getCldOgImageUrl({
+		src: 'og/land-moon',
+		overlays: [
+			{
+				text: {
+					fontFamily: 'Creepster',
+					fontSize: 90,
+					fontWeight: 'bold',
+					text: spookyAlias ?? 'PhantomCoder13',
+					border: '10px_solid_black',
+					letterSpacing: 8,
+					stroke: 'stroke',
+					color: '#F0E68C'
+				},
+				position: {
+					x: 390,
+					y: 160,
+					gravity: 'north_west'
+				}
+			},
+			{
+				text: {
+					fontFamily: 'Merriweather',
+					fontSize: 30,
+					fontWeight: 'bold',
+					text: spookyBio ? spookyBio.replaceAll(',', ' ') : 'A spooky portfolio',
+					border: '10px_solid_black',
+					stroke: 'stroke',
+					color: '#F0E68C'
+				},
+				position: {
+					x: 390,
+					y: 275,
+					gravity: 'north_west'
+				},
+				width: 790,
+				crop: 'fit'
+			},
+			{
+				publicId: 'xavimondev-creepy-avatar',
+				width: 310,
+				height: 310,
+				position: {
+					x: 70,
+					y: -10,
+					gravity: 'west'
+				}
+			},
+			{
+				publicId: sticker,
+				width: 100,
+				height: 100,
+				position: {
+					x: 70,
+					y: 50,
+					gravity: 'south_east'
+				}
+			}
+		]
+	})
+	ogImage = ogImageUrl
+}
 ---
 
-<Layout>
-		<>
-    	<Introduction avatarUrl={avatarUrl} summary={summary} username={login} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
-			<TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>
-			<TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>
-			<Share username={login} summaryVideoUrl={summaryVideoUrl}/>
-  	</>
-	}
+<Layout title={spookyAlias} description={spookyBio} ogImage={ogImage}>
+	<Introduction avatarUrl={avatarUrl} summary={summary} username={login} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
+	<TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>
+	<TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>
+	<Share username={login} summaryVideoUrl={summaryVideoUrl}/>
 </Layout>

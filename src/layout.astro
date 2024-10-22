@@ -5,17 +5,45 @@ import '@fontsource-variable/roboto-mono'
 import creepsterWoff2 from '@fontsource/creepster/files/creepster-latin-400-normal.woff2?url'
 import robotoMonoWoff2 from '@fontsource-variable/roboto-mono/files/roboto-mono-latin-wght-normal.woff2?url'
 import GrainyBackground from '@/components/GrainyBackground.astro'
-// import crimsonWoff2 from '@fontsource/crimson-text/files/crimson-text-latin-400-normal.woff2?url'
+import { SEO_APP_NAME, SEO_DESCRIPTION } from '@/constants'
+
+interface Props {
+	title?: string
+	description?: string
+	ogImage?: string
+}
+
+const { title, description, ogImage } = Astro.props
+
+const ogTitle = title ? `${title}'s ${SEO_APP_NAME}` : SEO_APP_NAME
+const ogDescription = description ?? SEO_DESCRIPTION
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="preload" as="font" type="font/woff2" href={creepsterWoff2} crossorigin="anonymous" />
     <link rel="preload" as="font" type="font/woff2" href={robotoMonoWoff2} crossorigin="anonymous" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Haunted Folio 👻</title>
+    <meta charset="UTF-8">
+    <meta name="description" content={ogDescription}>
+    <meta name="author" content="xavimondev">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={ogTitle}>
+    <meta property="og:description" content={ogDescription}>
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:url" content="https://hauntedfolio.vercel.app">
+    <meta property="og:site_name" content={SEO_APP_NAME}>
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={ogTitle}>
+    <meta name="twitter:description" content={ogDescription}>
+    <meta name="twitter:image" content={ogImage}>
+    <meta name="twitter:site" content="@xavimonp">
+    <title>{ogTitle} 👻</title>
   </head>
   <body class="bg-[radial-gradient(circle,_rgba(30,26,26,1)_0%,_rgba(0,0,0,1)_100%)]">
     <GrainyBackground />
