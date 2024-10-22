@@ -36,12 +36,11 @@ export const POST: APIRoute = async ({ request }) => {
 	if (request.headers.get('Content-Type') === 'application/json') {
 		const body = await request.json()
 		const { username } = body
-		// console.log(username)
 		try {
 			const hauntedFolio = await getHauntedFolio({
 				userId: username
 			})
-			// console.log(hauntedFolio)
+
 			if (!hauntedFolio) {
 				return new Response(
 					JSON.stringify({
@@ -100,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
 			const tracks = [
 				...getInitialTrack(),
 				getAvatarTrack({
-					publicId: creepyAvatarPublicId ?? 'hauntedfolio/stickers/witch-pumpkin'
+					publicId: creepyAvatarPublicId ?? 'stickers/witch-pumpkin'
 				}),
 				...getInitialScreenTrack({
 					name,
@@ -159,7 +158,7 @@ export const POST: APIRoute = async ({ request }) => {
 				})
 			)
 		} catch (e) {
-			console.log(e)
+			console.error(e)
 			return new Response(
 				JSON.stringify({
 					error: 'Could not generate video.'
