@@ -188,3 +188,7 @@ export const CREEPY_LOCATIONS = [
 	'OldChurch',
 	'Tomb'
 ]
+
+export const APP_DOMAIN = import.meta.env.PROD
+	? 'https://hauntedfolio.vercel.app'
+	: 'http://localhost:3000'

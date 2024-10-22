@@ -1,6 +1,8 @@
 ---
 import Twitter from '@/components/icons/Twitter.astro'
 import Download from '@/components/icons/Download.astro'
+import Facebook from '@/components/icons/Facebook.astro'
+import Linkedin from '@/components/icons/Linkedin.astro'
 
 interface Props {
 	username: string
@@ -39,22 +41,36 @@ const { username, summaryVideoUrl } = Astro.props
           </video>
         </div>
       </div>
-      <div class="w-full md:max-w-md">
+      <div class="w-full md:max-w-sm">
         <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
-          <p class="text-xl md:text-2xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
-          <p class="text-orange-400">Share your GitHub Haunted Summary and let your spooky contributions shine! Use the buttons below to spread the Halloween spirit on social media.</p>
-          <div class="flex mt-5 justify-between">
+          <p class="text-lg md:text-xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
+          <p class="text-orange-400">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
+          <div class="flex flex-col space-y-3 mt-5">
             <button 
-              class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 hover:rotate-2 inline-flex items-center"
+              class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
               aria-label="Share on Twitter"
-              id="shareTwitter"
+              id="shareX"
             >
               <Twitter class="mr-2 size-5" />
               Share on Twitter
             </button>
             <button 
+              class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+              id="shareFacebook"
+            >
+              <Facebook class="mr-2 size-5" />
+              Share on Facebook
+            </button>
+            <button 
+              class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 border-b-4 border-purple-800 hover:border-purple-900 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+              id="shareLinkedin"
+            >
+              <Linkedin class="mr-2 size-5" />
+              Share on LinkedIn
+            </button>
+            <button 
               id="download"
-              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 hover:-rotate-2 inline-flex items-center"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
               aria-label="Download Video"
             >
               <Download class="mr-2 size-5" />
@@ -68,7 +84,8 @@ const { username, summaryVideoUrl } = Astro.props
 </section>
 
 <script>
-  import { pollForProcessingImage } from '@cloudinary-util/util';
+  import { handleShareFacebook, handleShareLinkedin, handleShareX } from '@/helpers/social-sharing';
+import { pollForProcessingImage } from '@cloudinary-util/util';
 
   const username = document.querySelector('[data-username]')?.getAttribute('data-username') ?? ''
   let VIDEO_LINK = ''
@@ -97,14 +114,27 @@ const { username, summaryVideoUrl } = Astro.props
   }
 
   const downloadButton = document.querySelector('#download') as HTMLButtonElement
-  const shareTwitterButton = document.querySelector('#shareTwitter') as HTMLButtonElement
+  const shareXButton = document.querySelector('#shareX') as HTMLButtonElement
+  const shareFacebookButton = document.querySelector('#shareFacebook') as HTMLButtonElement
+  const shareLinkedinButton = document.querySelector('#shareLinkedin') as HTMLButtonElement
   
-  shareTwitterButton.addEventListener('click', () => {
-    generateVideo()  
+  shareFacebookButton.addEventListener('click', () => {
+    handleShareFacebook({ username })
+  })
+
+  shareLinkedinButton.addEventListener('click', () => {
+    handleShareLinkedin({ username })
+  })
+
+  shareXButton.addEventListener('click', () => {
+    handleShareX({ username })
   })
 
   downloadButton.addEventListener('click', () => {
-    if(!VIDEO_LINK) return
+    if(!VIDEO_LINK) {
+      generateVideo()
+      return
+    }
 
     // http://res.cloudinary.com/demo/image/upload/fl_attachment:new_sample/v1362144095/sample_attachment.jpg
     const a = document.createElement("a")
