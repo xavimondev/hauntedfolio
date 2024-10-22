@@ -24,17 +24,3 @@ export const saveHauntedFolio = async ({ data, isNew }: { data: unknown; isNew: 
 		await redis.expire(`user:${data.login}`, 60 * 60 * 12) // 1 day
 	}
 }
-
-export const updateFieldHauntedFolio = async ({
-	userId,
-	field,
-	value
-}: {
-	userId: string
-	field: string
-	value: unknown
-}) => {
-	await redis.hset(`user:${userId}`, {
-		[field]: value
-	})
-}
