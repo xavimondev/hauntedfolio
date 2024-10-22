@@ -2,6 +2,7 @@
 import { getRandomElement } from '@/helpers/getRandomElement'
 import { INTRODUCTIONS } from '@/constants'
 import UserProfile from '@/components/UserProfile.astro'
+import AvatarEffect from './AvatarEffect.astro'
 
 interface Props {
 	username: string
@@ -19,21 +20,27 @@ const { summary, avatarUrl, username, githubUrl, spookyAlias, spookyBio, spookyA
 const initialIntro = getRandomElement({ list: INTRODUCTIONS })
 ---
 
-<section class="content-center min-h-dvh w-screen" data-alias={spookyAlias}>
-  <!-- <div class="fixed left-0 top-0 -z-10 aspect-video h-[100vh] w-screen">
+<section class="relative content-center min-h-dvh w-screen" data-alias={spookyAlias}>
+  <div class="absolute left-0 top-0 -z-40 aspect-video h-[100vh] w-screen">
     <video
-      id="videoPlayer"
-      autoplay
-      muted
+      id="videoThunder"
       loop
-      class="aspect-video size-full overflow-hidden object-cover opacity-0 transition-opacity duration-500"
-      style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, transparent);"
-      playsinline
+      muted
+      autoplay={Boolean(spookyAlias)}
+      class:list={["aspect-video size-full overflow-hidden object-cover", !spookyAlias ? 'hidden' : 'block']}
       src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4'
     >
       <source type="video/mp4" src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4' />
     </video>
-  </div> -->
+    <video 
+      id="videoSmooke" 
+      loop
+      class="aspect-video size-full overflow-hidden object-cover hidden opacity-50"
+      muted
+      src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/assets/smooke-effect.mp4'>
+      <source type="video/mp4" src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/assets/smooke-effect.mp4' />
+    </video>
+  </div>
   {!spookyAlias 
     && 
     <>
@@ -41,10 +48,11 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
       <input name="avatarUrl" id="avatarUrl" class="hidden" value={avatarUrl} />
       <input name="username" id="username" class="hidden" value={username} />  
       <div class="w-full mx-auto max-w-4xl flex flex-col justify-center items-center gap-8" id="initialScreen">
-        <p class="text-2xl lg:text-4xl text-red-500 font-medium text-center font-body" id="spookyFact">{initialIntro}</p> 
+        <p class="text-2xl lg:text-5xl text-green-700 font-medium text-center font-body animate-flicker" id="spookyFact">{initialIntro}</p> 
       </div>
     </>
   }
+  <AvatarEffect />
   <UserProfile username={username} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
 </section>
 
@@ -56,12 +64,19 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
   import { pollForProcessingImage } from '@cloudinary-util/util';
 
   const aliasElement = document.querySelector("[data-alias]")?.getAttribute('data-alias') ?? ''
-  
+  const videoThunder = document.querySelector("#videoThunder") as HTMLVideoElement
+  const videoSmooke = document.querySelector("#videoSmooke") as HTMLVideoElement
+  const userCreepyAvatarEffectContainer = document.querySelector("#userCreepyAvatarEffectContainer") as HTMLDivElement
+  const userCreepyAvatarEffect = document.querySelector("#userCreepyAvatarEffect") as HTMLImageElement
+  const initialScreen = document.querySelector('#initialScreen') as HTMLHeadingElement
+
   if(!aliasElement){
+    videoSmooke.style.display = 'block'
+    videoSmooke.play()
+
     const avatarUrlElement = document.querySelector('#avatarUrl') as HTMLInputElement
     const usernameElement = document.querySelector('#username') as HTMLInputElement
     const spookyFactElement = document.querySelector('#spookyFact') as HTMLParagraphElement
-    // const videoEl = document.querySelector("#video-player") as HTMLVideoElement
     const summary = document.querySelector('#summary') as HTMLTextAreaElement
     const summaryValue = summary.value
     
@@ -103,7 +118,7 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
     const bgPrompt = getRandomElement({ list: BG_PROMPTS })
     const maskPrompt = getRandomElement({ list: MASK_PROMPTS })
     
-    // Uploading the avatar image to Cloudinary
+    // Uploading the github avatar image to Cloudinary
     const uploadResponse = await fetch('/api/upload', {
       method: 'POST',
       headers: {
@@ -114,16 +129,16 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
 
     const uploadData = await uploadResponse.json()
     if(!uploadData || !uploadData.publicId){
-      console.error('Error uploading image')
+      console.error('Error uploading github image')
       stopInterval()
     }else {
       const { publicId } = uploadData
     
-      // Generating creepy avatar
+      // Generating creepy avatar from the github image
       const imageUrl = generateCreepyAvatar({ publicId: publicId, bgPrompt, maskPrompt })
     
       if (await pollForProcessingImage({ src: imageUrl }) ) {
-
+        // Uploading the creepy avatar image to Cloudinary
         const uploadResponse = await fetch('/api/upload', {
           method: 'POST',
           headers: {
@@ -137,17 +152,29 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
         stopInterval()
 
         if(!uploadData || !uploadData.publicId){
-
+          console.error('Error uploading creepy avatar')
         }else {
           const { publicId:creepyAvatarPublicId } = uploadData
       
           const finalMessage = getRandomElement({ list: FINAL_MESSAGES })
           spookyFactElement.textContent = finalMessage
-      
-          // videoEl.play()
+
+          setTimeout(() => {
+            initialScreen.style.display = 'none'
+            userCreepyAvatarEffectContainer.style.display = 'block'
+            userCreepyAvatarEffect.src = imageUrl
+          },2000)
+
+          setTimeout(() => {
+            videoSmooke.style.display = 'none'
+            videoSmooke.pause()
+            videoThunder.style.display = 'block'
+            videoThunder.play()
+          },5000)
+          
           // Adding details to the user profile
           const userCreepyAlias = document.querySelector('#userCreepyAlias') as HTMLHeadingElement
-          const initialScreen = document.querySelector('#initialScreen') as HTMLHeadingElement
+        
           const userCreepyProfile = document.querySelector('#userCreepyProfile') as HTMLDivElement
           const userCreepyBio = document.querySelector('#userCreepyBio') as HTMLParagraphElement
           const useCreepyAvatar = document.querySelector('#userCreepyAvatar') as HTMLImageElement
@@ -157,9 +184,11 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
           useCreepyAvatar.src = imageUrl
           
           setTimeout(() => {
-            initialScreen.style.display = 'none'
+            // videoThunder.style.display = 'none'
+            // videoThunder.pause()
+            userCreepyAvatarEffectContainer.style.display = 'none'
             userCreepyProfile.style.display = 'block'
-          },1000)
+          },8000)
   
           // Updating spooky data in database
           const responseDB = await fetch('/api/save-details', {

@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
+import animations from '@midudev/tailwind-animations'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,7 +14,8 @@ export default {
 			},
 			animation: {
 				float: 'float 2s ease-in-out infinite',
-				flicker: 'flicker 3s infinite'
+				flicker: 'flicker 3s infinite',
+				'zoom-3d': 'zoomIn3D 16s cubic-bezier(0.16, 1, 0.3, 1) forwards'
 			},
 			keyframes: {
 				dotAppear: {
@@ -35,6 +37,16 @@ export default {
 					'20%, 24%, 55%': {
 						opacity: 0
 					}
+				},
+				zoomIn3D: {
+					'0%': {
+						transform: 'perspective(1000px) scale(0)',
+						opacity: '0'
+					},
+					'100%': {
+						transform: 'perspective(1000px) scale(1)',
+						opacity: '1'
+					}
 				}
 			},
 			textShadow: {
@@ -54,6 +66,7 @@ export default {
 				},
 				{ values: theme('textShadow') }
 			)
-		})
+		}),
+		animations
 	]
 }
