@@ -2,11 +2,11 @@ import type { APIRoute } from 'astro'
 import { z } from 'zod'
 import { createOpenAI } from '@ai-sdk/openai'
 import { generateObject } from 'ai'
-import { formatSpookyBioPrompt, formatSpookyFactPrompt } from '@/prompts'
+import { formatSpookyBioPrompt } from '@/prompts'
 
-const groq = createOpenAI({
-	baseURL: 'https://api.groq.com/openai/v1',
-	apiKey: import.meta.env.GROQ_API_KEY
+const openai = createOpenAI({
+	compatibility: 'strict',
+	apiKey: import.meta.env.OPENAI_API_KEY
 })
 
 const CREEPY_SCHEMA = z.object({
@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
 		const summary = body.summary
 
 		const { object } = await generateObject({
-			model: groq('llama-3.1-70b-versatile'),
+			model: openai('gpt-4o-mini'),
 			schema: CREEPY_SCHEMA,
 			prompt: formatSpookyBioPrompt({
 				summary

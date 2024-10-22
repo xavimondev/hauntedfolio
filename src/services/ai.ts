@@ -7,9 +7,9 @@ import { createOpenAI } from '@ai-sdk/openai'
 import { generateObject, generateText } from 'ai'
 import { z } from 'zod'
 
-const groq = createOpenAI({
-	baseURL: 'https://api.groq.com/openai/v1',
-	apiKey: import.meta.env.GROQ_API_KEY
+const openai = createOpenAI({
+	compatibility: 'strict',
+	apiKey: import.meta.env.OPENAI_API_KEY
 })
 
 export const generateFarewellMessage = async ({
@@ -18,8 +18,7 @@ export const generateFarewellMessage = async ({
 	programmingLanguage
 }: { repositoryName: string; numStarts: number; programmingLanguage: string }) => {
 	const { text } = await generateText({
-		model: groq('llama-3.1-8b-instant'),
-		temperature: 0.5,
+		model: openai('gpt-4o-mini'),
 		prompt: formatFarewellPrompt({
 			repositoryName,
 			numStarts,
@@ -38,7 +37,7 @@ export const generateSpookySkills = async ({
 	cursedProjects: string
 }) => {
 	const { object } = await generateObject({
-		model: groq('llama-3.1-8b-instant'),
+		model: openai('gpt-4o-mini'),
 		schema: z.object({
 			skills: z.array(z.string())
 		}),
@@ -53,7 +52,7 @@ export const generateSpookySkills = async ({
 
 export const generateCursedCreations = async ({ topProjects }: { topProjects: string }) => {
 	const { object } = await generateObject({
-		model: groq('llama-3.1-8b-instant'),
+		model: openai('gpt-4o-mini'),
 		schema: z.object({
 			cursedCreations: z.array(
 				z.object({

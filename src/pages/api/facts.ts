@@ -4,9 +4,9 @@ import { createOpenAI } from '@ai-sdk/openai'
 import { generateObject } from 'ai'
 import { formatSpookyFactPrompt } from '@/prompts'
 
-const groq = createOpenAI({
-	baseURL: 'https://api.groq.com/openai/v1',
-	apiKey: import.meta.env.GROQ_API_KEY
+const openai = createOpenAI({
+	compatibility: 'strict',
+	apiKey: import.meta.env.OPENAI_API_KEY
 })
 
 const CREEPY_SCHEMA = z.object({
@@ -18,8 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
 		const body = await request.json()
 		const summary = body.summary
 		const { object } = await generateObject({
-			model: groq('llama-3.1-70b-versatile'),
-			temperature: 0.7,
+			model: openai('gpt-4o-mini'),
 			schema: CREEPY_SCHEMA,
 			prompt: formatSpookyFactPrompt({
 				summary
