@@ -15,6 +15,7 @@ ${DOMAIN_OG}/${username}`
 }
 
 export const handleShareFacebook = async ({ username }: { username: string }) => {
+	const myProfile = `${DOMAIN_OG}/${username}`
 	const intent = 'https://www.facebook.com/sharer/sharer.php'
 	const text = `👻 🎃 Come take a look at my eerie portfolio this Halloween!
 
@@ -23,17 +24,16 @@ Click the link, and dare to explore! 🔗 ⬇️
 
 ${DOMAIN_OG}/${username}`
 
-	window.open(`${intent}?quote=${encodeURIComponent(text)}`)
+	window.open(`${intent}?u=${encodeURIComponent(myProfile)}&quote=${encodeURIComponent(text)}`)
 }
 
 export const handleShareLinkedin = async ({ username }: { username: string }) => {
-	const intent = 'https://www.linkedin.com/shareArticle?mini=true'
+	const myProfile = `${DOMAIN_OG}/${username}`
+	const intent = 'https://www.linkedin.com/sharing/share-offsite/'
 	const text = `🧌 Step into my haunted portfolio and discover the projects lurking in the shadows!
 
 Ready to see how I bring creativity and code to life? 👻
-Explore if you're brave enough! 🔗 ⬇️
+Explore if you're brave enough! 🔗 ⬇️`
 
-${DOMAIN_OG}/${username}`
-
-	window.open(`${intent}?title=${encodeURIComponent(text)}`)
+	window.open(`${intent}?url=${encodeURIComponent(myProfile)}&text=${encodeURIComponent(text)}`)
 }
