@@ -9,7 +9,7 @@ import { generateVideo } from '@/services/image'
 import type { APIRoute } from 'astro'
 import JSZip from 'jszip'
 import templateManifest from '@/data/manifest.json'
-import { getHauntedFolio } from '@/services/db'
+import { getHauntedFolio, saveHauntedFolio } from '@/services/db'
 import { getRandomElement } from '@/helpers/getRandomElement'
 import { generateCursedCreations, generateSpookySkills } from '@/services/ai'
 import {
@@ -36,19 +36,20 @@ export const POST: APIRoute = async ({ request }) => {
 	if (request.headers.get('Content-Type') === 'application/json') {
 		const body = await request.json()
 		const { username } = body
-
+		// console.log(username)
 		try {
 			const hauntedFolio = await getHauntedFolio({
 				userId: username
 			})
-
-			if (!hauntedFolio)
+			// console.log(hauntedFolio)
+			if (!hauntedFolio) {
 				return new Response(
 					JSON.stringify({
 						error: 'Could not find spooky data'
 					}),
 					{ status: 404 }
 				)
+			}
 
 			const {
 				spookyAlias,
@@ -147,6 +148,10 @@ export const POST: APIRoute = async ({ request }) => {
 				folder: `${USER_PATH_CLD}/${username}`,
 				publicId: 'my-summary'
 			})
+
+			// @ts-ignore
+			const videoUrl = results.secure_url.replace('.clt', '.mp4')
+			await saveHauntedFolio({ data: { login: username, summaryVideoUrl: videoUrl }, isNew: false })
 
 			return new Response(
 				JSON.stringify({

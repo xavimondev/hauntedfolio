@@ -4,9 +4,10 @@ import Download from '@/components/icons/Download.astro'
 
 interface Props {
 	username: string
+	summaryVideoUrl?: string
 }
 
-const { username } = Astro.props
+const { username, summaryVideoUrl } = Astro.props
 ---
 
 <section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl" data-username={username}>
@@ -27,6 +28,7 @@ const { username } = Astro.props
         />
         <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
           <video 
+            src={summaryVideoUrl}
             class="w-full h-full object-cover relative z-20"
             controls
             poster="/placeholder.svg?height=400&width=600"
