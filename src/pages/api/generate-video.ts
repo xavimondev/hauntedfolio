@@ -89,9 +89,9 @@ export const POST: APIRoute = async ({ request }) => {
 
 			const cursedCreationsClips = cursedCreations.map(({ id, description }) => {
 				const repository = topRepositories.find((tr) => tr.name === id)
-				const { stars, forks } = repository ?? {}
+				const { stars, forks, name } = repository ?? {}
 				return {
-					description: description,
+					description: `${name} ${description}`,
 					details: `With ${stars} stars and ${forks} forks`
 				}
 			})

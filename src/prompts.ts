@@ -5,7 +5,7 @@ export const formatSpookyBioPrompt = ({ summary }: { summary: string }) => {
 
   Generate:
 
-  1. A creepy alias, maximum 3 words.
+  1. A creepy alias, maximum 3 words. To generate the alias, avoid mentioning the words "code", "phantom" and use the summary to generate the alias.
   2. A spooky intro(introduction) using 55 words.
 	3. A creepy bio(biography) using 35 words. Be as creepy as possible.`
 }
@@ -68,7 +68,7 @@ ${cursedProjects}
 2. Programming Languages: ${cursedLanguages} 
 
 The skills should make the user sound ominously powerful but with a humorous edge.
-Every skill should have 6 words as maximum`
+Every skill should have 5 words as maximum`
 }
 
 export const formatCursedCreationsPrompt = ({
@@ -77,9 +77,8 @@ export const formatCursedCreationsPrompt = ({
 	topProjects: string
 }) => {
 	return `Given a list of the top projects, generate a spooky description for each project. 
-Each description should start with the project's name followed by a spooky, eerie summary. 
 Don't include neither the number of stars and language in the summary. 
-Ensure the description is no longer than 12 words.
+Ensure the description is no longer than 8 words.
 
 Here is the list of projects:
 
