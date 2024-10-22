@@ -147,3 +147,44 @@ export const FINAL_MESSAGES = [
 ]
 
 export const USER_PATH_CLD = 'hauntedfolio/users'
+
+export const COMMUNICATION_LANGUAGES = [
+	'HexWhisper',
+	'GhoulSpeak',
+	'PhantomTongue',
+	'ShadowChant',
+	'CursedMurmur',
+	'HauntScript',
+	'WraithWords',
+	'SpecterSpeech',
+	'BoneRattle',
+	'NetherVoice'
+]
+
+export const DEFAULT_SPOOKY_ALIAS = 'PhantomCoder13'
+export const DEFAULT_SPOOKY_BIO =
+	'A shadow in the digital realm, PhantomCoder13 drifts through lines of code like a specter in the night.'
+export const DEFAULT_SPOOKY_INTRO = `Beware... For you have stumbled upon PhantomCoder13's haunted corner of the internet. Here, lines of code weave eerie tales, and every keystroke holds a chilling secret. Proceed... if you dare.`
+
+export const CREEPY_LOCATIONS = [
+	'Graveyard',
+	'Catacombs',
+	'Asylum',
+	'Morgue',
+	'Crypt',
+	'Swamp',
+	'Dungeon',
+	'Sewers',
+	'Forest',
+	'Cemetery',
+	'HauntedHouse',
+	'AbandonedMansion',
+	'GhostTown',
+	'DarkAlley',
+	'ForgottenMine',
+	'Underground',
+	'FoggyMarsh',
+	'Nightwoods',
+	'OldChurch',
+	'Tomb'
+]

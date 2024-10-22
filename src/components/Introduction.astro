@@ -52,7 +52,7 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
   // TODO: add dynamic import
   import { BG_PROMPTS, FINAL_MESSAGES, HALLOWEEN_FACTS, INTRODUCTIONS, MASK_PROMPTS } from '@/constants'
   import { getRandomElement } from '@/helpers/getRandomElement'
-  import { transform } from '@/services/transformations'
+  import { generateCreepyAvatar } from '@/services/transformations'
   import { pollForProcessingImage } from '@cloudinary-util/util';
 
   const aliasElement = document.querySelector("[data-alias]")?.getAttribute('data-alias') ?? ''
@@ -101,7 +101,7 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
     const data = await response.json()
     const { alias, intro, bio } = data
     const bgPrompt = getRandomElement({ list: BG_PROMPTS })
-    const mask = getRandomElement({ list: MASK_PROMPTS })
+    const maskPrompt = getRandomElement({ list: MASK_PROMPTS })
     
     // Uploading the avatar image to Cloudinary
     const uploadResponse = await fetch('/api/upload', {
@@ -109,66 +109,79 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ avatarUrl: avatarUrlElement.value, username: usernameElement.value })
+      body: JSON.stringify({ avatarUrl: avatarUrlElement.value, username: usernameElement.value, publicId: usernameElement.value })
     })
 
     const uploadData = await uploadResponse.json()
     if(!uploadData || !uploadData.publicId){
       console.error('Error uploading image')
+      stopInterval()
     }else {
       const { publicId } = uploadData
     
       // Generating creepy avatar
-      const imageUrl = transform({ publicId: publicId, bgPrompt, mask })
-    
-      // console.log({alias, intro, bio, imageUrl, publicId});
+      const imageUrl = generateCreepyAvatar({ publicId: publicId, bgPrompt, maskPrompt })
     
       if (await pollForProcessingImage({ src: imageUrl }) ) {
-        stopInterval()
-    
-        const finalMessage = getRandomElement({ list: FINAL_MESSAGES })
-        spookyFactElement.textContent = finalMessage
-    
-        // videoEl.play()
-        // Adding details to the user profile
-        const userCreepyAlias = document.querySelector('#userCreepyAlias') as HTMLHeadingElement
-        const initialScreen = document.querySelector('#initialScreen') as HTMLHeadingElement
-        const userCreepyProfile = document.querySelector('#userCreepyProfile') as HTMLDivElement
-        const userCreepyBio = document.querySelector('#userCreepyBio') as HTMLParagraphElement
-        const useCreepyAvatar = document.querySelector('#userCreepyAvatar') as HTMLImageElement
-    
-        userCreepyAlias.textContent = alias
-        userCreepyBio.textContent = bio
-        useCreepyAvatar.src = imageUrl
-        
-        setTimeout(() => {
-          initialScreen.style.display = 'none'
-          userCreepyProfile.style.display = 'block'
-        },1000)
 
-        // Updating spooky data in database
-        // console.log('Image ready', imageUrl);
-        const responseDB = await fetch('/api/save-details', {
+        const uploadResponse = await fetch('/api/upload', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            username: usernameElement.value,
-            alias,
-            bio,
-            spookyAvatar: imageUrl,
-            intro
-          })
+          body: JSON.stringify({ avatarUrl: imageUrl, username: usernameElement.value, publicId: `${usernameElement.value}-creepy-avatar` })
         })
 
-        const dataDB = await responseDB.json()
-        if(!dataDB.ok){
-          console.error('Error saving spooky data')
+        const uploadData = await uploadResponse.json()
+
+        stopInterval()
+
+        if(!uploadData || !uploadData.publicId){
+
+        }else {
+          const { publicId:creepyAvatarPublicId } = uploadData
+      
+          const finalMessage = getRandomElement({ list: FINAL_MESSAGES })
+          spookyFactElement.textContent = finalMessage
+      
+          // videoEl.play()
+          // Adding details to the user profile
+          const userCreepyAlias = document.querySelector('#userCreepyAlias') as HTMLHeadingElement
+          const initialScreen = document.querySelector('#initialScreen') as HTMLHeadingElement
+          const userCreepyProfile = document.querySelector('#userCreepyProfile') as HTMLDivElement
+          const userCreepyBio = document.querySelector('#userCreepyBio') as HTMLParagraphElement
+          const useCreepyAvatar = document.querySelector('#userCreepyAvatar') as HTMLImageElement
+      
+          userCreepyAlias.textContent = alias
+          userCreepyBio.textContent = bio
+          useCreepyAvatar.src = imageUrl
+          
+          setTimeout(() => {
+            initialScreen.style.display = 'none'
+            userCreepyProfile.style.display = 'block'
+          },1000)
+  
+          // Updating spooky data in database
+          const responseDB = await fetch('/api/save-details', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              username: usernameElement.value,
+              alias,
+              bio,
+              spookyAvatar: imageUrl,
+              intro,
+              creepyAvatarPublicId
+            })
+          })
+  
+          const dataDB = await responseDB.json()
+          if(!dataDB.ok){
+            console.error('Error saving spooky data')
+          }
         }
-        // else {
-        //   console.log('dataDB', dataDB)
-        // }
       }
     }
   }

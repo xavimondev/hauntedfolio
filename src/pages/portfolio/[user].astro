@@ -3,7 +3,6 @@ import Introduction from '@/components/Introduction.astro'
 import Share from '@/components/Share.astro'
 import TopLanguages from '@/components/TopLanguages.astro'
 import TopRepositories from '@/components/TopRepositories.astro'
-import UserProfile from '@/components/UserProfile.astro'
 import Layout from '@/layout.astro'
 import { getHauntedFolio, saveHauntedFolio } from '@/services/db'
 import { fetchUserData, fetchUserRepos, getLanguagesFromRepositories } from '@/services/github'
@@ -87,7 +86,7 @@ const {
     	<Introduction avatarUrl={avatarUrl} summary={summary} username={login} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
 			<TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>
 			<TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>
-			{/* <Share/> */}
-  	</H>
+			<Share username={login}/>
+  	</>
 	}
 </Layout>

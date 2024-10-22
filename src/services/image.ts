@@ -9,13 +9,14 @@ cloudinary.config({
 
 export const uploadImage = async ({
 	githubAvatarUrl,
-	username
-}: { githubAvatarUrl: string; username: string }) => {
+	username,
+	publicId
+}: { githubAvatarUrl: string; username: string; publicId: string }) => {
 	try {
 		const response = await cloudinary.uploader.upload(githubAvatarUrl, {
 			asset_folder: `${USER_PATH_CLD}/${username}`,
-			format: 'png',
-			public_id: username
+			format: 'avif',
+			public_id: publicId
 		})
 
 		const imagePublicId = response.public_id
@@ -186,31 +187,6 @@ export const generateTombstone = async ({
 	} catch (error) {
 		console.error(error)
 	}
-}
-
-export const generateCreepyAvatar = async ({
-	publicId,
-	bgPrompt,
-	maskPrompt
-}: { publicId: string; bgPrompt: string; maskPrompt: string }) => {
-	const res = await cloudinary.uploader.explicit(publicId, {
-		eager: [
-			{
-				width: 350,
-				height: 350,
-				transformation: [
-					{
-						effect: `gen_background_replace:prompt_${bgPrompt}`
-					},
-					{ effect: `gen_replace:from_face;to_${maskPrompt}` }
-				]
-			}
-		],
-		type: 'upload',
-		format: 'avif'
-	})
-
-	return res.eager[0].url
 }
 
 export const generateVideo = async ({

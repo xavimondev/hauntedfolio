@@ -1,11 +1,19 @@
 ---
-import Heading from '@/components/Heading.astro'
 import Twitter from '@/components/icons/Twitter.astro'
 import Download from '@/components/icons/Download.astro'
+
+interface Props {
+	username: string
+}
+
+const { username } = Astro.props
 ---
 
-<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl">
-	<Heading title="Spooky Halloween Video!"/>
+<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl" data-username={username}>
+  <div class="relative bg-black px-4 py-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] -rotate-2 hover:rotate-0 transition duration-200 mb-16 sm:mb-20">
+		<h2 class="text-4xl sm:text-5xl lg:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Summary Video!</h2>
+		<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
+	</div>
 	<div class="w-full mt-8 lg:mt-12 xl:mt-16">
     <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-4">
       <div class="size-full">
@@ -19,11 +27,10 @@ import Download from '@/components/icons/Download.astro'
         />
         <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
           <video 
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover relative z-20"
             controls
             poster="/placeholder.svg?height=400&width=600"
             id="video"
-            autoplay
           >
             <!-- <source src={videoUrl} type="video/mp4" /> -->
             Your browser does not support the video tag.
@@ -59,23 +66,23 @@ import Download from '@/components/icons/Download.astro'
 </section>
 
 <script>
-  import templateManifest from '@/data/manifest.json'; 
   import { pollForProcessingImage } from '@cloudinary-util/util';
 
+  const username = document.querySelector('[data-username]')?.getAttribute('data-username') ?? ''
   let VIDEO_LINK = ''
 
   const generateVideo = async () => {
-    const response = await fetch('/api/generate', {
+    const response = await fetch('/api/generate-video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        manifest: templateManifest
+        username
       })
     })
 
-    const {results: video} = await response.json()
+    const { results: video } = await response.json()
     const videoUrl = video.secure_url.replace('.clt', '.mp4');
 
     const videoElement = document.querySelector('#video') as HTMLVideoElement

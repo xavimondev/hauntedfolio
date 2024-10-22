@@ -6,8 +6,8 @@ export const formatSpookyBioPrompt = ({ summary }: { summary: string }) => {
   Generate:
 
   1. A creepy alias, maximum 3 words.
-  2. A spooky introduction, maximum 20 words. Avoid repeating words from the given bio. Use location.
-	3. A creepy biography. maximun 40 words. Be as creepy as possible.`
+  2. A spooky intro(introduction) using 45 words.
+	3. A creepy bio(biography) using 20 words. Be as creepy as possible.`
 }
 
 export const formatSpookyFactPrompt = ({
@@ -46,4 +46,45 @@ export const formatFarewellPrompt = ({
 	Number of stars: ${numStarts}
 	Programming language: ${programmingLanguage}
 	`
+}
+
+export const formatCreepySkillsPrompt = ({
+	cursedLanguages,
+	cursedProjects
+}: {
+	cursedLanguages: string
+	cursedProjects: string
+}) => {
+	return `Generate a list of eight creepy skills for a GitHub user based on their top projects and 
+the programming languages they work with. The skills should have a dark, spooky vibe with some sarcastic undertones. 
+The skills should be a mix of eerie-sounding abilities that subtly reference common developer struggles and exaggerated powers tied to their expertise. 
+Here's the user's information:
+
+1. Top Projects: 
+${cursedProjects}
+
+2. Programming Languages: ${cursedLanguages} 
+
+The skills should make the user sound ominously powerful but with a humorous edge.
+Every skill should have 6 words as maximum`
+}
+
+export const formatCursedCreationsPrompt = ({
+	topProjects
+}: {
+	topProjects: string
+}) => {
+	return `Given a list of the top projects, generate a spooky description for each project. 
+Each description should start with the project's name followed by a spooky, eerie summary. 
+Don't include neither the number of stars and language in the summary. 
+Ensure the description is no longer than 12 words.
+
+Here is the list of projects:
+
+${topProjects}
+
+The summaries should evoke a haunting or mysterious feeling, 
+hinting that these projects have dark powers or eerie traits. Keep them short and chilling.
+
+Return the project name as the "id" and the spooky description as the "summary." `
 }

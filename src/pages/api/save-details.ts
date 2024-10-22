@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ request }) => {
 	if (request.headers.get('Content-Type') === 'application/json') {
-		const { username, alias, bio, spookyAvatar, intro } = await request.json()
+		const { username, alias, bio, spookyAvatar, intro, creepyAvatarPublicId } = await request.json()
 		try {
 			await saveHauntedFolio({
 				data: {
@@ -11,7 +11,8 @@ export const POST: APIRoute = async ({ request }) => {
 					spookyAlias: alias,
 					spookyBio: bio,
 					spookyIntro: intro,
-					spookyAvatarUrl: spookyAvatar
+					spookyAvatarUrl: spookyAvatar,
+					creepyAvatarPublicId
 				},
 				isNew: false
 			})

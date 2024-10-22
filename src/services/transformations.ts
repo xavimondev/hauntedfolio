@@ -1,11 +1,11 @@
 import { getRandomFilter } from '@/helpers/filters'
 import { getCldImageUrl } from 'astro-cloudinary/helpers'
 
-export const transform = ({
+export const generateCreepyAvatar = ({
 	publicId,
 	bgPrompt,
-	mask
-}: { publicId: string; bgPrompt: string; mask: string }) => {
+	maskPrompt
+}: { publicId: string; bgPrompt: string; maskPrompt: string }) => {
 	const filter = getRandomFilter()
 
 	const url = getCldImageUrl({
@@ -17,7 +17,7 @@ export const transform = ({
 		art: filter,
 		replace: {
 			from: 'face',
-			to: mask
+			to: maskPrompt
 		}
 	})
 

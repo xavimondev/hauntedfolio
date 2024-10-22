@@ -158,4 +158,6 @@ export interface SpookyData extends UserData {
 		project: string
 		url: string
 	}[]
+	summaryVideoUrl?: string
+	creepyAvatarPublicId?: string
 }
