@@ -3,6 +3,8 @@ import Twitter from '@/components/icons/Twitter.astro'
 import Download from '@/components/icons/Download.astro'
 import Facebook from '@/components/icons/Facebook.astro'
 import Linkedin from '@/components/icons/Linkedin.astro'
+import Play from '@/components/icons/Play.astro'
+import Pause from '@/components/icons/Pause.astro'
 
 interface Props {
 	username: string
@@ -12,40 +14,40 @@ interface Props {
 const { username, summaryVideoUrl } = Astro.props
 ---
 
-<section class="content-center w-screen h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl" data-username={username}>
-  <div class="relative bg-black px-4 py-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] -rotate-2 hover:rotate-0 transition duration-200 mb-16 sm:mb-20">
-		<h2 class="text-4xl sm:text-5xl lg:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Haunted Echoes</h2>
-		<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
+<section class="content-center xl:w-screen xl:h-screen p-8 size-full mx-auto max-w-4xl lg:max-w-7xl mt-24 xl:mt-32" data-username={username}>
+  <div class="py-2 mb-16 sm:mb-20 flex flex-col gap-6 md:gap-8">
+		<div class="relative bg-black px-4 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
+			<h2 class="text-5xl md:text-7xl xl:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Cursed Sharing</h2>
+			<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
+		</div>
+		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Share the eerie creations you find or craft within the shadows of the coding world</p>	
 	</div>
 	<div class="w-full mt-8 lg:mt-12 xl:mt-16">
-    <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-4">
-      <div class="size-full">
-        <div 
-          class="absolute top-0 left-0 w-full h-full pointer-events-none"
-          style={{
-            backgroundImage: "url('/placeholder.svg?height=20&width=20')",
-            backgroundRepeat: 'repeat',
-            opacity: 0.1
-          }}
-        />
-        <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
-          <video 
-            src={summaryVideoUrl}
-            class="w-full h-full object-cover relative z-20"
-            controls
-            poster="/placeholder.svg?height=400&width=600"
-            id="video"
-          >
-            <!-- <source src={videoUrl} type="video/mp4" /> -->
-            Your browser does not support the video tag.
-          </video>
-        </div>
+    <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-8 size-full md:justify-between">
+      <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
+        <video 
+          src={summaryVideoUrl}
+          class="w-full h-full object-cover relative z-20"
+          poster="https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/assets/pc-videoplayer"
+          id="video"
+        >
+          <!-- <source src={videoUrl} type="video/mp4" /> -->
+          Your browser does not support the video tag.
+        </video>
+        <button
+          id="buttonVideo"
+          data-status="stop"
+          class='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-orange-500 text-white rounded-full p-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-300'
+        >
+          <Play class="size-12 block" id="iconPlay"/>
+          <Pause class="size-12 hidden" id="iconPause"/>
+        </button>
       </div>
-      <div class="w-full md:max-w-sm">
+      <div class="size-full md:max-w-md">
         <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
           <p class="text-lg md:text-xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
-          <p class="text-orange-400">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
-          <div class="flex flex-col space-y-3 mt-5">
+          <p class="text-orange-200 text-sm">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
+          <div class="flex flex-col space-y-3 mt-5 size-full">
             <button 
               class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
               aria-label="Share on Twitter"
@@ -85,10 +87,18 @@ const { username, summaryVideoUrl } = Astro.props
 
 <script>
   import { handleShareFacebook, handleShareLinkedin, handleShareX } from '@/helpers/social-sharing';
-import { pollForProcessingImage } from '@cloudinary-util/util';
+  import { pollForProcessingImage } from '@cloudinary-util/util';
 
   const username = document.querySelector('[data-username]')?.getAttribute('data-username') ?? ''
-  let VIDEO_LINK = ''
+  const downloadButton = document.querySelector('#download') as HTMLButtonElement
+  const shareXButton = document.querySelector('#shareX') as HTMLButtonElement
+  const shareFacebookButton = document.querySelector('#shareFacebook') as HTMLButtonElement
+  const shareLinkedinButton = document.querySelector('#shareLinkedin') as HTMLButtonElement
+
+  const buttonVideo = document.querySelector('#buttonVideo') as HTMLButtonElement
+  const videoPlayer = document.querySelector('#video') as HTMLVideoElement
+  const iconPlay = document.querySelector('#iconPlay') as HTMLElement
+  const iconPause = document.querySelector('#iconPause') as HTMLElement
 
   const generateVideo = async () => {
     const response = await fetch('/api/generate-video', {
@@ -109,15 +119,47 @@ import { pollForProcessingImage } from '@cloudinary-util/util';
     if (await pollForProcessingImage({ src: videoUrl }) ) {
       console.log('Video ready', videoUrl);
       videoElement.src = videoUrl
-      VIDEO_LINK = videoUrl
     }
   }
 
-  const downloadButton = document.querySelector('#download') as HTMLButtonElement
-  const shareXButton = document.querySelector('#shareX') as HTMLButtonElement
-  const shareFacebookButton = document.querySelector('#shareFacebook') as HTMLButtonElement
-  const shareLinkedinButton = document.querySelector('#shareLinkedin') as HTMLButtonElement
-  
+  const downloadVideo = async ({videoUrl}: { videoUrl: string }) => {
+    const response = await fetch(videoUrl)
+    const blob = await response.blob()
+
+    const blobUrl = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+
+    a.href = blobUrl
+    a.download = 'my-summary.mp4'
+
+    document.body.appendChild(a)
+    a.click()
+
+    document.body.removeChild(a)
+    URL.revokeObjectURL(blobUrl)
+  }
+
+  buttonVideo.addEventListener('click', () => {
+    const status = buttonVideo.getAttribute('data-status') as string
+    if(status === 'playing') {
+      videoPlayer.pause()
+      buttonVideo.style.opacity = "100";
+      buttonVideo.setAttribute('data-status', 'stop')
+    } else {
+      videoPlayer.play()
+      buttonVideo.style.opacity = "0";
+      buttonVideo.setAttribute('data-status', 'playing')
+    }
+  })
+
+  // videoPlayer.addEventListener('mouseenter', () => {
+  //   const status = buttonVideo.getAttribute('data-status') as string
+  //   if(status === 'playing') {
+
+  //   }
+  // })
+
   shareFacebookButton.addEventListener('click', () => {
     handleShareFacebook({ username })
   })
@@ -130,17 +172,17 @@ import { pollForProcessingImage } from '@cloudinary-util/util';
     handleShareX({ username })
   })
 
+
   downloadButton.addEventListener('click', () => {
-    if(!VIDEO_LINK) {
+    const linkVideo = videoPlayer.src
+    if(!linkVideo) {
+      // console.log('no link video, lets generate one')
       generateVideo()
       return
     }
 
-    // http://res.cloudinary.com/demo/image/upload/fl_attachment:new_sample/v1362144095/sample_attachment.jpg
-    const a = document.createElement("a")
-    a.href = VIDEO_LINK.replace('/upload/', '/upload/fl_attachment:my_summary/')
-    a.download = "my_summary.mp4"
-    a.click() 
+    // console.log(linkVideo)
+    downloadVideo({ videoUrl: linkVideo })
   })
  
 </script>
