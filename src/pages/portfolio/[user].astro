@@ -78,7 +78,8 @@ const {
 	spookyAvatarUrl,
 	spookyLanguages,
 	spookyTopRepositories,
-	summaryVideoUrl
+	summaryVideoUrl,
+	creepyAvatarPublicId
 } = spookyData
 
 let ogImage = getCldOgImageUrl({ src: 'og/og-image', width: 1200, height: 630 })
@@ -126,7 +127,7 @@ if (spookyBio) {
 				crop: 'fit'
 			},
 			{
-				publicId: 'xavimondev-creepy-avatar',
+				publicId: creepyAvatarPublicId,
 				width: 310,
 				height: 310,
 				position: {
