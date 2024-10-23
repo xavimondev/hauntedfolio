@@ -1,8 +1,11 @@
 ---
 import Layout from '@/layout.astro'
+import { getCldOgImageUrl } from 'astro-cloudinary/helpers'
+
+const ogImage = getCldOgImageUrl({ src: 'og/og-image', width: 1200, height: 630 })
 ---
 
-<Layout>
+<Layout ogImage={ogImage}>
   <section class="min-h-dvh content-center size-full bg-[url(/assets/bg-index.avif)] bg-cover bg-center bg-no-repeat">
     <div class="mx-auto max-w-2xl md:max-w-5xl p-8 flex flex-col gap-8 md:gap-12">
       <div class="relative bg-black p-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] -rotate-2 hover:rotate-0 transition duration-200">
