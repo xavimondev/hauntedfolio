@@ -1011,7 +1011,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 130,
-			y: 260,
+			y: 250,
 			width: 350,
 			height: 320,
 			clipDefaults: {
@@ -1032,7 +1032,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 170,
-			y: 310,
+			y: 315,
 			width: 350,
 			height: 320,
 			clipDefaults: {
@@ -1067,7 +1067,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 480,
-			y: 260,
+			y: 250,
 			width: 345,
 			height: 320,
 			clipDefaults: {
@@ -1088,7 +1088,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 530,
-			y: 310,
+			y: 315,
 			width: 350,
 			height: 320,
 			clipDefaults: {
@@ -1123,7 +1123,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 820,
-			y: 260,
+			y: 250,
 			width: 380,
 			height: 320,
 			clipDefaults: {
@@ -1200,7 +1200,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 170,
-			y: 520,
+			y: 550,
 			width: 350,
 			height: 320,
 			clipDefaults: {
@@ -1256,7 +1256,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 530,
-			y: 520,
+			y: 550,
 			width: 350,
 			height: 320,
 			clipDefaults: {
@@ -1312,7 +1312,7 @@ export const getCursedCreationsTrack = ({
 			startOffset: 43000,
 			endOffset: 45000,
 			x: 860,
-			y: 520,
+			y: 550,
 			width: 350,
 			height: 320,
 			clipDefaults: {
