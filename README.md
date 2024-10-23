@@ -1,47 +1,93 @@
-# Astro Starter Kit: Minimal
+
+<div align="center">
+<a href=https://github.com/xavimondev/hauntedfolio target="_blank">
+  <img src='https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/og/og-image' width="100%" alt="Banner" />
+</a>
+</div>
+
+## Overview
+
+HauntedFolio generates a fun, creepy portfolio to showcase your top repositories, languages, and bio, enhanced with spooky visuals and mysterious facts. The app creates a haunted-style video that highlights your projects in an unsettling way, offering a unique, spine-chilling way to display your skills. Powered by Cloudinary for image transformations and video generation, HauntedFolio is the perfect blend of tech and terror!
+
+
+## Stack
+
+- [Astro](https://astro.build/): The web framework for content-driven websites.
+- [Cloudinary](https://cloudinary.com/): Image and Video API Platform.
+- [Vercel AI SDK](https://sdk.vercel.ai/): The Vercel AI SDK to help developers build AI-powered applications.
+- [Uptash](https://upstash.com/): Data caching.
+- [Tailwindcss](https://tailwindcss.com/): A utility-first CSS framework for rapid UI development.
+
+## Setting Up
+
+### PUBLIC_CLOUDINARY_CLOUD_NAME
+
+- Go to the [Cloudinary website](https://cloudinary.com/).
+- Sign in to your account or create a new one.
+- Navigate to dashboard’s page, you’ll see your Cloud Name.
+- Copy the Cloud Name.
+
+### PUBLIC_CLOUDINARY_API_KEY - CLOUDINARY_API_SECRET
+
+- Navigate to Settings.
+- Under API Keys, click on Generate API Key.
+- Copy the generated API Key and API Secret.
+
+### OPENAI_API_KEY
+
+- Go to the [OpenAI website](https://openai.com/).
+- Sign in to your account or create a new one.
+- Navigate to your [API settings](https://platform.openai.com/account/api-keys).
+- Generate an Secret key.
+- Copy the generated Secret key.
+
+### UPSTASH_REDIS_REST_URL - UPSTASH_REDIS_REST_TOKEN
+
+- Go to the Uptash [console](https://console.upstash.com/).
+- Sign in to your account or create a new one.
+- Navigate to your database.
+- Copy the generated keys.
+
+## Run Locally
+
+1.Clone the hauntedfolio repository:
 
 ```sh
-npm create astro@latest -- --template minimal
+git clone https://github.com/xavimondev/hauntedfolio
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+2.Rename the `.env.example` to `.env`:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+mv .example.env .env
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+3.Install dependencies:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+# bun
+bun install
+# pnpm
+pnpm install
+# npm
+npm install
+# yarn
+yarn install
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+6.Start the development mode:
 
-## 🧞 Commands
+```bash
+# bun
+bun dev
+# pnpm
+pnpm dev
+# npm
+npm run dev
+# yarn
+yarn dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## License
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project is licensed under the **MIT License** - see the [**MIT License**](https://github.com/xavimondev/hauntedfolio/blob/main/LICENSE) file for details.
