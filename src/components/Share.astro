@@ -1,10 +1,6 @@
 ---
-import Twitter from '@/components/icons/Twitter.astro'
-import Download from '@/components/icons/Download.astro'
-import Facebook from '@/components/icons/Facebook.astro'
-import Linkedin from '@/components/icons/Linkedin.astro'
-import Play from '@/components/icons/Play.astro'
-import Pause from '@/components/icons/Pause.astro'
+import Flask from '@/components/icons/Flask.astro'
+import ShareResult from '@/components/ShareResult.astro'
 
 interface Props {
 	username: string
@@ -22,83 +18,49 @@ const { username, summaryVideoUrl } = Astro.props
 		</div>
 		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Share the eerie creations you find or craft within the shadows of the coding world</p>	
 	</div>
-	<div class="w-full mt-8 lg:mt-12 xl:mt-16">
-    <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-8 size-full md:justify-between">
-      <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
-        <video 
-          src={summaryVideoUrl}
-          class="w-full h-full object-cover relative z-20"
-          poster="https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/assets/pc-videoplayer"
-          id="video"
-        >
-          <!-- <source src={videoUrl} type="video/mp4" /> -->
-          Your browser does not support the video tag.
-        </video>
-        <button
-          id="buttonVideo"
-          data-status="stop"
-          class='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-orange-500 text-white rounded-full p-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-300'
-        >
-          <Play class="size-12 block" id="iconPlay"/>
-          <Pause class="size-12 hidden" id="iconPause"/>
-        </button>
+  <div class:list={["h-auto mx-auto max-w-5xl lg:max-w-[90rem]", summaryVideoUrl ? 'hidden' : 'block']}>
+      <div class="size-full inline-flex justify-center">
+        <p class="text-2xl lg:text-4xl text-purple-300 font-medium text-center font-body hidden" id="userFact">
+          The Vanishing Hitchhiker is a ghost story where a phantom passenger disappears before arriving at their destination.
+        </p>
       </div>
-      <div class="size-full md:max-w-md">
-        <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
-          <p class="text-lg md:text-xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
-          <p class="text-orange-200 text-sm">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
-          <div class="flex flex-col space-y-3 mt-5 size-full">
-            <button 
-              class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              aria-label="Share on Twitter"
-              id="shareX"
-            >
-              <Twitter class="mr-2 size-5" />
-              Share on Twitter
-            </button>
-            <button 
-              class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              id="shareFacebook"
-            >
-              <Facebook class="mr-2 size-5" />
-              Share on Facebook
-            </button>
-            <button 
-              class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 border-b-4 border-sky-800 hover:border-sky-900 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              id="shareLinkedin"
-            >
-              <Linkedin class="mr-2 size-5" />
-              Share on LinkedIn
-            </button>
-            <button 
-              id="download"
-              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              aria-label="Download Video"
-            >
-              <Download class="mr-2 size-5" />
-              Download Video
-            </button>
-          </div>
-        </div>
+      <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] space-y-4" id="shareInitialWarning">
+        <p class="text-xl md:text-5xl font-bold text-orange-500">🎃 Warning 👻</p>
+        <p class="text-orange-200 text-2xl"><span class="text-orange-600 font-bold">Beware, mortal!</span> The video you seek will take 2 to 7 minutes to conjure. Once summoned, it will haunt your screen for 1 full minute. During the wait, you’ll witness eerie facts creeping in about your repositories... Tread carefully and let the darkness unfold.</p>
+        <button 
+          class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-800 rounded transform transition-transform hover:scale-105 inline-flex items-center text-xl"
+          aria-label="Generate Spooky Video"
+          id="btnGenerateSpookyVideo"
+        >
+          <Flask class="mr-2 size-5" />
+          Generate Spooky Video
+        </button>  
       </div>
     </div>
-	</div>
+
+  <ShareResult summaryVideoUrl={summaryVideoUrl}/>
 </section>
 
 <script>
-  import { handleShareFacebook, handleShareLinkedin, handleShareX } from '@/helpers/social-sharing';
-  import { pollForProcessingImage } from '@cloudinary-util/util';
+  import { FINAL_MESSAGES, REAL_LIFE_FACTS } from '@/constants'
+  import { getRandomElement } from '@/helpers/getRandomElement'
+  import { handleShareFacebook, handleShareLinkedin, handleShareX } from '@/helpers/social-sharing'
+  import { pollForProcessingImage } from '@cloudinary-util/util'
 
+  const shareInitialWarning = document.querySelector('#shareInitialWarning') as HTMLDivElement
+  const shareResultPanel = document.querySelector('#shareResultPanel') as HTMLDivElement
+  const userFact = document.querySelector('#userFact') as HTMLParagraphElement
+  const btnGenerateSpookyVideo = document.querySelector('#btnGenerateSpookyVideo') as HTMLButtonElement
   const username = document.querySelector('[data-username]')?.getAttribute('data-username') ?? ''
-  const downloadButton = document.querySelector('#download') as HTMLButtonElement
+  const btnDownloadVideo = document.querySelector('#btnDownloadVideo') as HTMLButtonElement
   const shareXButton = document.querySelector('#shareX') as HTMLButtonElement
   const shareFacebookButton = document.querySelector('#shareFacebook') as HTMLButtonElement
   const shareLinkedinButton = document.querySelector('#shareLinkedin') as HTMLButtonElement
 
   const buttonVideo = document.querySelector('#buttonVideo') as HTMLButtonElement
   const videoPlayer = document.querySelector('#video') as HTMLVideoElement
-  const iconPlay = document.querySelector('#iconPlay') as HTMLElement
-  const iconPause = document.querySelector('#iconPause') as HTMLElement
+  // const iconPlay = document.querySelector('#iconPlay') as HTMLElement
+  // const iconPause = document.querySelector('#iconPause') as HTMLElement
 
   const generateVideo = async () => {
     const response = await fetch('/api/generate-video', {
@@ -112,13 +74,25 @@ const { username, summaryVideoUrl } = Astro.props
     })
 
     const { results: video } = await response.json()
-    const videoUrl = video.secure_url.replace('.clt', '.mp4');
+    const videoUrl = video.secure_url.replace('.clt', '.mp4')
 
     const videoElement = document.querySelector('#video') as HTMLVideoElement
+    const result = await pollForProcessingImage({ src: videoUrl }) 
 
-    if (await pollForProcessingImage({ src: videoUrl }) ) {
-      console.log('Video ready', videoUrl);
+    if (result.success) {
       videoElement.src = videoUrl
+      removeInterval()
+
+      const latestMessage = getRandomElement({ list: FINAL_MESSAGES })
+      userFact.textContent = latestMessage
+
+      setTimeout(() => {
+        userFact.style.display = 'none'
+        shareResultPanel.style.display = 'block'
+      },2000)
+
+    }else {
+      console.error('Error generating video')
     }
   }
 
@@ -140,6 +114,38 @@ const { username, summaryVideoUrl } = Astro.props
     URL.revokeObjectURL(blobUrl)
   }
 
+  let shareIntervalId: any
+
+  const generateUserFact = async () => {
+    shareInitialWarning.style.display = 'none'
+    userFact.style.display = 'block'
+
+    shareIntervalId = setInterval(async () => {
+      const oneOrTwo = Math.random() > 0.5 ? 'one' : 'two'
+      if(oneOrTwo === 'one'){
+        const realFact = getRandomElement({ list: REAL_LIFE_FACTS })
+        userFact.textContent = realFact
+      }else {
+        const response = await fetch('/api/facts',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username
+          })
+        })
+        const { fact } = await response.json()
+        userFact.textContent = fact
+      }
+    },5000)
+  }
+
+  const removeInterval = () => {
+    clearInterval(shareIntervalId)
+    shareIntervalId = null
+  }
+
   buttonVideo.addEventListener('click', () => {
     const status = buttonVideo.getAttribute('data-status') as string
     if(status === 'playing') {
@@ -153,13 +159,6 @@ const { username, summaryVideoUrl } = Astro.props
     }
   })
 
-  // videoPlayer.addEventListener('mouseenter', () => {
-  //   const status = buttonVideo.getAttribute('data-status') as string
-  //   if(status === 'playing') {
-
-  //   }
-  // })
-
   shareFacebookButton.addEventListener('click', () => {
     handleShareFacebook({ username })
   })
@@ -172,16 +171,14 @@ const { username, summaryVideoUrl } = Astro.props
     handleShareX({ username })
   })
 
+  btnGenerateSpookyVideo.addEventListener('click', () => {
+    generateVideo()
+    generateUserFact()
+  })
 
-  downloadButton.addEventListener('click', () => {
+  btnDownloadVideo.addEventListener('click', () => {
     const linkVideo = videoPlayer.src
-    if(!linkVideo) {
-      // console.log('no link video, lets generate one')
-      generateVideo()
-      return
-    }
-
-    // console.log(linkVideo)
+    // console.log('linkVideo', linkVideo)
     downloadVideo({ videoUrl: linkVideo })
   })
  

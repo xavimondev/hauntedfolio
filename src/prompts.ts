@@ -15,17 +15,13 @@ export const formatSpookyFactPrompt = ({
 }: {
 	summary: string
 }) => {
-	return `Given the following summary from a haunted individual:
+	return `Given the following summary from a haunted github user:
 ${summary}
 
 Generate:
 
-A spooky fact with a maximum of 40 words. Start each fact with an emoji and end with one too.
-It should be terrifying or humorous in a Halloween theme. At least one word should be in UPPERCASE.
-Once you generate the spooky fact, create the following prompts based on the fact:
-
-1. Background prompt: Use three words to describe an eerie scene related to the fact.
-2. Mask: Use three words to describe an object that should replace the face of the user, keeping in mind the Halloween theme.`
+A spooky fact with a maximum of 25 words. Start each fact with an emoji.
+It should be terrifying and related to the user information.`
 }
 
 export const formatFarewellPrompt = ({

@@ -189,6 +189,54 @@ export const CREEPY_LOCATIONS = [
 	'Tomb'
 ]
 
+export const REAL_LIFE_FACTS = [
+	'In 1589, Peter Stumpp was executed in Germany after confessing to being a werewolf.',
+	'The Bell Witch haunted a Tennessee family in the early 1800s with terrifying poltergeist activity.',
+	'During the Salem witch trials, 19 people were hanged, all accused of witchcraft.',
+	'Some believe the infamous Winchester House is still haunted by the ghosts of those killed by the rifle.',
+	`In 1974, Ronald O'Bryan poisoned his son's Halloween candy, inspiring the urban legend of dangerous treats.`,
+	'The eerie mystery of the Mary Celeste ship in 1872: its crew disappeared without a trace.',
+	'Legend says La Llorona, a weeping ghost, roams the night seeking her lost children.',
+	'The Dybbuk Box, an old wine cabinet, is said to contain a malevolent spirit capable of possessing its owner.',
+	'Ireland is home to the original Halloween festival, Samhain, a celebration of spirits crossing into the mortal world.',
+	'The Amityville Horror house became infamous after the Lutz family fled, claiming it was haunted by demons.',
+	'The Lizzie Borden House, where she allegedly murdered her parents, is now a popular haunted attraction.',
+	'The mysterious disappearance of 3 lighthouse keepers on Eilean Mor in 1900 remains unsolved to this day.',
+	'Annie Palmer, known as the White Witch of Rose Hall, was said to practice voodoo and terrorized a Jamaican plantation.',
+	'The Bermuda Triangle has been the site of many mysterious disappearances, including ships and planes vanishing without a trace.',
+	'In the 1800s, Victorian mourning rituals included taking post-mortem photos of deceased loved ones.',
+	'The Tower of London is said to be haunted by the ghost of Anne Boleyn, wandering headless through its halls.',
+	'Hundreds of people have claimed to see the spirit of Abraham Lincoln haunting the White House.',
+	'The legend of the Jersey Devil describes a terrifying creature said to inhabit the Pine Barrens of New Jersey.',
+	'Waverly Hills Sanatorium is believed to be haunted by the spirits of patients who died from tuberculosis.',
+	"The curse of King Tut's tomb allegedly caused mysterious deaths among those who opened it in 1922.",
+	"Sleepy Hollow, New York, was the real inspiration for Washington Irving's 'The Legend of Sleepy Hollow.'",
+	'Baba Yaga, a witch from Slavic folklore, flies through the skies in a mortar, seeking lost souls.',
+	'The Curse of the Mummy: Some say opening ancient Egyptian tombs brings misfortune or death.',
+	'The Witch of Endor is one of the most infamous witches mentioned in the Bible, who conjured the ghost of a king.',
+	'In 1991, the ghost of a woman named Teresa Fidalgo allegedly appeared on Portuguese roads, causing deadly car crashes.',
+	'The spooky Winchester Mystery House was designed by a woman trying to confuse the ghosts that haunted her.',
+	'In the 1800s, many believed witches could fly using broomsticks on Halloween night to attend secret gatherings.',
+	'New Orleans is famous for its haunted French Quarter, where many homes are said to be cursed by voodoo magic.',
+	'The ghost of Bloody Mary is said to appear if you chant her name in front of a mirror at night.',
+	'The Brown Lady of Raynham Hall is a famous ghost in England, seen wandering with a lantern in hand.',
+	'Chilling tales tell of the Headless Horseman, a phantom that gallops through the night seeking revenge.',
+	'Marie Laveau, a powerful Voodoo Queen of New Orleans, was said to cast spells and control spirits.',
+	'In the 1600s, the Pendle Witch Trials in England led to 12 people being hanged for witchcraft.',
+	'Robert the Doll, a haunted doll from Florida, is said to curse those who take its picture without permission.',
+	'In 1971, a skeleton used in a haunted house ride turned out to be a real human corpse.',
+	'In the 1950s, a couple claimed to encounter a UFO while driving near Area 51, sparking modern alien abduction myths.',
+	'The Smiley Face Killers theory suggests that a group of serial killers has been active in the U.S. since the 1990s.',
+	'Sarah Winchester believed her home was cursed by the spirits of those killed by Winchester rifles.',
+	'The legend of the Haunted Mirror of Myrtles Plantation says spirits are trapped inside it, and eerie faces sometimes appear.',
+	'The murder of 8-year-old Helen Brach in 1977 remains a Halloween mystery—her body was never found.',
+	'Ed and Lorraine Warren, famous paranormal investigators, claimed the Annabelle doll was possessed by a demonic entity.',
+	'Bodie, California, is a well-preserved ghost town said to be haunted by the spirits of those who lived there.',
+	'The mystery of the Roanoke Colony disappearance in 1590 still baffles historians—no one knows where they went.',
+	'The Vanishing Hitchhiker is a ghost story where a phantom passenger disappears before arriving at their destination.',
+	"The real-life exorcism of Roland Doe in 1949 inspired the horror film 'The Exorcist.'"
+]
+
 export const APP_DOMAIN = import.meta.env.PROD
 	? 'https://hauntedfolio.vercel.app'
 	: 'http://localhost:3000'

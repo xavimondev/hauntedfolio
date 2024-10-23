@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { createOpenAI } from '@ai-sdk/openai'
 import { generateObject } from 'ai'
 import { formatSpookyFactPrompt } from '@/prompts'
+import { getHauntedFolio } from '@/services/db'
 
 const openai = createOpenAI({
 	compatibility: 'strict',
@@ -10,18 +11,25 @@ const openai = createOpenAI({
 })
 
 const CREEPY_SCHEMA = z.object({
-	fact: z.object({ content: z.string(), bgPrompt: z.string(), mask: z.string() })
+	fact: z.string()
 })
 
 export const POST: APIRoute = async ({ request }) => {
 	if (request.headers.get('Content-Type') === 'application/json') {
 		const body = await request.json()
-		const summary = body.summary
+		const username = body.username
+
+		const data = await getHauntedFolio({
+			userId: username
+		})
+		const { summary } = data ?? {}
+
 		const { object } = await generateObject({
 			model: openai('gpt-4o-mini'),
 			schema: CREEPY_SCHEMA,
+			temperature: 0.6,
 			prompt: formatSpookyFactPrompt({
-				summary
+				summary: summary ?? 'A developer from deep in the internet'
 			})
 		})
 
@@ -29,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 		return new Response(
 			JSON.stringify({
-				...fact
+				fact
 			})
 		)
 	}

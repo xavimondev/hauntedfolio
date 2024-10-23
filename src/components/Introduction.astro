@@ -1,6 +1,4 @@
 ---
-import { getRandomElement } from '@/helpers/getRandomElement'
-import { INTRODUCTIONS } from '@/constants'
 import UserProfile from '@/components/UserProfile.astro'
 import AvatarEffect from './AvatarEffect.astro'
 
@@ -16,8 +14,6 @@ interface Props {
 
 const { summary, avatarUrl, username, githubUrl, spookyAlias, spookyBio, spookyAvatarUrl } =
 	Astro.props
-
-const initialIntro = getRandomElement({ list: INTRODUCTIONS })
 ---
 
 <section class="relative content-center min-h-dvh w-screen" data-alias={spookyAlias}>
@@ -48,7 +44,7 @@ const initialIntro = getRandomElement({ list: INTRODUCTIONS })
       <input name="avatarUrl" id="avatarUrl" class="hidden" value={avatarUrl} />
       <input name="username" id="username" class="hidden" value={username} />  
       <div class="w-full mx-auto max-w-4xl flex flex-col justify-center items-center gap-8" id="initialScreen">
-        <p class="text-2xl lg:text-5xl text-green-700 font-medium text-center font-body animate-flicker" id="spookyFact">{initialIntro}</p> 
+        <p class="text-2xl lg:text-5xl text-green-700 font-medium text-center font-body animate-flicker" id="spookyFact">Gathering your information from the shadows... This may take a moment.</p> 
       </div>
     </>
   }
