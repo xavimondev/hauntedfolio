@@ -12,8 +12,7 @@ import { getCldOgImageUrl } from 'astro-cloudinary/helpers'
 const { user } = Astro.params
 
 if (!user) {
-	Astro.redirect('/404')
-	return
+	return Astro.redirect('/404')
 }
 
 // Let's get the user data from the database
@@ -25,8 +24,7 @@ if (!spookyData) {
 	const data = await fetchUserData({ username: user })
 	if (!data) {
 		// console.log('user not found in github')
-		Astro.redirect('/user-not-found')
-		return
+		return Astro.redirect('/user-not-found')
 	}
 
 	const topLanguages = (await getLanguagesFromRepositories({ username: user })) ?? []
