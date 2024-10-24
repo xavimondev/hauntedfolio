@@ -15,12 +15,10 @@ export const getHauntedFolio = async ({
 
 export const saveHauntedFolio = async ({ data, isNew }: { data: unknown; isNew: boolean }) => {
 	// @ts-ignore
-	await redis.hset(`user:${data.login}`, data, {
-		ex: 60 * 60 * 24 // 1 day
-	})
+	await redis.hset(`user:${data.login}`, data)
 
 	if (isNew) {
 		// @ts-ignore
-		await redis.expire(`user:${data.login}`, 60 * 60 * 12) // 1 day
+		await redis.expire(`user:${data.login}`, 60 * 60 * 24 * 30) // 30 days
 	}
 }
