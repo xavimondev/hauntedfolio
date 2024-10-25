@@ -17,7 +17,6 @@ if (!user) {
 
 // Let's get the user data from the database
 let spookyData = await getHauntedFolio({ userId: user })
-// console.log(spookyData)
 
 if (!spookyData) {
 	// console.log('no user, lets save it')
@@ -154,7 +153,7 @@ if (spookyBio) {
 
 <Layout title={spookyAlias} description={spookyBio} ogImage={ogImage}>
 	<Introduction avatarUrl={avatarUrl} summary={summary} username={login} githubUrl={githubUrl} spookyAlias={spookyAlias} spookyBio={spookyBio} spookyAvatarUrl={spookyAvatarUrl}/>
-	<TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>
-	<TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>
+	{topLanguages.length > 0 && <TopLanguages topLanguages={topLanguages} spookyLanguages={spookyLanguages} username={login}/>}
+	{topRepositories.length > 0 && <TopRepositories topRepositories={topRepositories} spookyTopRepositories={spookyTopRepositories} username={login}/>}
 	<Share username={login} summaryVideoUrl={summaryVideoUrl}/>
 </Layout>
