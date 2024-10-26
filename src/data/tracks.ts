@@ -1,5 +1,5 @@
 import { COMMUNICATION_LANGUAGES, CREEPY_LOCATIONS } from '@/constants'
-import { getRandomElement } from '@/helpers/getRandomElement'
+import { getRandomElement } from '@/helpers/get-random-element'
 
 export const getInitialTrack = () => {
 	return [

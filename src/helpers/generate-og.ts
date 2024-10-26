@@ -1,5 +1,5 @@
 import { getCldOgImageUrl } from 'astro-cloudinary/helpers'
-import { getRandomElement } from '@/helpers/getRandomElement'
+import { getRandomElement } from '@/helpers/get-random-element'
 
 const sticker = 'stickers/pepo'
 const randomOg = getRandomElement({ list: ['og/land-moon', 'og/haunted-house'] })

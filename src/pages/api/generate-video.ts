@@ -10,7 +10,7 @@ import type { APIRoute } from 'astro'
 import JSZip from 'jszip'
 import templateManifest from '@/data/manifest.json'
 import { getHauntedFolio, saveHauntedFolio } from '@/services/db'
-import { getRandomElement } from '@/helpers/getRandomElement'
+import { getRandomElement } from '@/helpers/get-random-element'
 import { generateCursedCreations, generateSpookySkills } from '@/services/ai'
 import {
 	getAvatarTrack,
