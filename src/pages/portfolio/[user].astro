@@ -3,6 +3,7 @@ import Introduction from '@/components/Introduction.astro'
 import Share from '@/components/Share.astro'
 import TopLanguages from '@/components/TopLanguages.astro'
 import TopRepositories from '@/components/TopRepositories.astro'
+import { APP_DOMAIN } from '@/constants'
 import { getRandomElement } from '@/helpers/getRandomElement'
 import Layout from '@/layout.astro'
 import { getHauntedFolio, saveHauntedFolio } from '@/services/db'
@@ -81,7 +82,7 @@ const {
 	creepyAvatarPublicId
 } = spookyData
 
-let ogImage = 'https://huantedfolio.vercel.app/og-image.avif'
+let ogImage = `${APP_DOMAIN}/og-image.avif`
 
 const sticker = 'stickers/pepo'
 const randomOg = getRandomElement({ list: ['og/land-moon', 'og/haunted-house'] })
