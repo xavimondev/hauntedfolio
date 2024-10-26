@@ -9,7 +9,6 @@ export default {
 		extend: {
 			fontFamily: {
 				heading: ['Creepster', ...defaultTheme.fontFamily.sans],
-				subtitle: ['Crimson Text', ...defaultTheme.fontFamily.sans],
 				body: ['Roboto Mono Variable', ...defaultTheme.fontFamily.sans]
 			},
 			animation: {

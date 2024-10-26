@@ -18,7 +18,6 @@
     "@cloudinary-util/util": "4.0.0",
     "@fontsource-variable/roboto-mono": "5.1.0",
     "@fontsource/creepster": "5.1.0",
-    "@fontsource/crimson-text": "5.1.0",
     "@midudev/tailwind-animations": "0.1.0",
     "@upstash/redis": "1.34.3",
     "ai": "3.4.9",
