@@ -1,9 +1,12 @@
+import { generateOgImageUrl } from '@/helpers/generate-og'
 import { saveHauntedFolio } from '@/services/db'
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ request }) => {
 	if (request.headers.get('Content-Type') === 'application/json') {
 		const { username, alias, bio, spookyAvatar, intro, creepyAvatarPublicId } = await request.json()
+		const ogImage = generateOgImageUrl({ spookyAlias: alias, spookyBio: bio, creepyAvatarPublicId })
+
 		try {
 			await saveHauntedFolio({
 				data: {
@@ -12,7 +15,8 @@ export const POST: APIRoute = async ({ request }) => {
 					spookyBio: bio,
 					spookyIntro: intro,
 					spookyAvatarUrl: spookyAvatar,
-					creepyAvatarPublicId
+					creepyAvatarPublicId,
+					ogImage
 				},
 				isNew: false
 			})
