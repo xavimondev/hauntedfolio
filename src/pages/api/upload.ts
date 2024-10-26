@@ -1,4 +1,4 @@
-import { uploadImage } from '@/services/image'
+import { uploadImage } from '@/services/server-transformations'
 import type { APIRoute } from 'astro'
 
 export const POST: APIRoute = async ({ request }) => {

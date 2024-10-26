@@ -5,7 +5,7 @@ import {
 	INTERVIEW_ANSWERS,
 	USER_PATH_CLD
 } from '@/constants'
-import { generateVideo } from '@/services/image'
+import { generateVideo } from '@/services/server-transformations'
 import type { APIRoute } from 'astro'
 import JSZip from 'jszip'
 import templateManifest from '@/data/manifest.json'
