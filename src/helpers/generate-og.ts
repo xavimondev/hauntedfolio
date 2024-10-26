@@ -15,7 +15,7 @@ export const generateOgImageUrl = ({
 			{
 				text: {
 					fontFamily: 'Creepster',
-					fontSize: 90,
+					fontSize: 87,
 					fontWeight: 'bold',
 					text: spookyAlias ?? 'PhantomCoder13',
 					border: '10px_solid_black',
@@ -32,7 +32,7 @@ export const generateOgImageUrl = ({
 			{
 				text: {
 					fontFamily: 'Merriweather',
-					fontSize: 30,
+					fontSize: 29,
 					fontWeight: 'bold',
 					text: spookyBio ? spookyBio.replaceAll(',', ' ') : 'A spooky portfolio',
 					border: '10px_solid_black',
