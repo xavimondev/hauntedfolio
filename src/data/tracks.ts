@@ -102,7 +102,6 @@ export const getInitialTrack = () => {
 }
 
 export const getAvatarTrack = ({ publicId }: { publicId: string }) => {
-	// 'hauntedfolio/midudev/avatar'
 	return {
 		startOffset: 22000,
 		endOffset: 25000,

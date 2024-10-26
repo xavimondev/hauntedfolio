@@ -55,8 +55,8 @@ const { summary, avatarUrl, username, githubUrl, spookyAlias, spookyBio, spookyA
 <script>
   // TODO: add dynamic import
   import { BG_PROMPTS, FINAL_MESSAGES, HALLOWEEN_FACTS, INTRODUCTIONS, MASK_PROMPTS } from '@/constants'
-  import { getRandomElement } from '@/helpers/getRandomElement'
-  import { generateCreepyAvatar } from '@/services/transformations'
+  import { getRandomElement } from '@/helpers/get-random-element'
+  import { generateCreepyAvatar } from '@/services/client-transformations'
   import { pollForProcessingImage } from '@cloudinary-util/util';
 
   const aliasElement = document.querySelector("[data-alias]")?.getAttribute('data-alias') ?? ''
