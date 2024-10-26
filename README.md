@@ -1,7 +1,7 @@
 
 <div align="center">
 <a href=https://github.com/xavimondev/hauntedfolio target="_blank">
-  <img src='https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/og/og-image' width="100%" alt="Banner" />
+  <img src='https://huantedfolio.vercel.app/og-image.avif' width="100%" alt="Banner" />
 </a>
 </div>
 
