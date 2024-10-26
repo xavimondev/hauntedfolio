@@ -1,4 +1,5 @@
-import { getRandomFilter } from '@/helpers/filters'
+import { FILTERS } from '@/constants'
+import { getRandomElement } from '@/helpers/get-random-element'
 import { getCldImageUrl } from 'astro-cloudinary/helpers'
 
 export const generateCreepyAvatar = ({
@@ -6,7 +7,7 @@ export const generateCreepyAvatar = ({
 	bgPrompt,
 	maskPrompt
 }: { publicId: string; bgPrompt: string; maskPrompt: string }) => {
-	const filter = getRandomFilter()
+	const randomFilter = getRandomElement({ list: FILTERS })
 
 	const url = getCldImageUrl({
 		src: publicId,
@@ -14,7 +15,7 @@ export const generateCreepyAvatar = ({
 		width: 350,
 		height: 350,
 		crop: 'fill',
-		art: filter,
+		art: randomFilter,
 		replace: {
 			from: 'face',
 			to: maskPrompt

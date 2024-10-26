@@ -243,3 +243,5 @@ export const APP_DOMAIN = import.meta.env.PROD
 
 export const SEO_DESCRIPTION = 'Turn your Github data into a Hauntedfolio'
 export const SEO_APP_NAME = 'Hauntedfolio'
+
+export const FILTERS = ['sizzle', 'quartz', 'incognito', 'fes', 'linen', 'hokusai']
