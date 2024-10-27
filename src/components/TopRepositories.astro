@@ -56,11 +56,10 @@ if (!data) {
 	await saveHauntedFolio({ data: { login: username, spookyTopRepositories: data }, isNew: false })
 }
 ---
-<section class="content-center p-8 size-full xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32 mb-16 sm:mb-20">
+<section class="content-center p-8 size-full xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32 mb-8 sm:mb-16">
 	<div class="py-2 flex flex-col gap-6 md:gap-8">
-		<div class="relative bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
+		<div class="bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
 			<h2 class="text-5xl md:text-7xl xl:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Graveyard of Repos</h2>
-			<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
 		</div>
 		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Explore the most popular, haunted repositories lurking in the depths of GitHub</p>	
 	</div>
@@ -69,7 +68,7 @@ if (!data) {
       <img 
 				src={url} 
 				alt={`A tombstone picture of ${project}`} 
-				class="aspect-square size-full md:size-80 xl:size-[380px] transition duration-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:drop-shadow-[0_0_20px_#457b9d] animate-float"/> 
+				class="aspect-square size-full md:size-80 xl:size-[350px] transition duration-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:drop-shadow-[0_0_20px_#457b9d] animate-float"/> 
 		))}
 	</div>
 </section>

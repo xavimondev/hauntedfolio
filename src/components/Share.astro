@@ -10,11 +10,10 @@ interface Props {
 const { username, summaryVideoUrl } = Astro.props
 ---
 
-<section class="content-center xl:w-screen xl:h-screen p-8 size-full mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32" data-username={username}>
-  <div class="py-2 mb-16 sm:mb-20 flex flex-col gap-6 md:gap-8">
-		<div class="relative bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
+<section class="content-center p-8 xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32" data-username={username}>
+  <div class="py-2 flex flex-col gap-6 md:gap-8">
+		<div class="bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
 			<h2 class="text-5xl md:text-7xl xl:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Cursed Sharing</h2>
-			<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
 		</div>
 		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Share the eerie creations you find or craft within the shadows of the coding world</p>	
 	</div>

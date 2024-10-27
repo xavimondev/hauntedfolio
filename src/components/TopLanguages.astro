@@ -2,6 +2,7 @@
 import { getRandomElement } from '@/helpers/get-random-element'
 import { saveHauntedFolio } from '@/services/db'
 import { generatePumpkin } from '@/services/server-transformations'
+import PumpkinLanguage from '@/components/PumpkinLanguage.astro'
 
 type Language = {
 	name: string
@@ -45,22 +46,16 @@ if (!data) {
 }
 ---
 
-<section class="content-center p-8 xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32 mb-16 sm:mb-20">
+<section class="content-center p-8 xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32 mb-8 sm:mb-16">
 	<div class="py-2 flex flex-col gap-6 md:gap-8">
-		<div class="relative bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
+		<div class="bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
 			<h2 class="text-5xl md:text-7xl xl:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Spellbound Languages</h2>
-			<img src="/assets/ghost.avif" alt="A creepy ghost" class="absolute hidden lg:block bottom-2 right-6 size-14 md:size-20 animate-float"/>
 		</div>
 		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Discover the programming languages that silently dominate, waiting to be unleashed.</p>	
 	</div>
-	<div class="w-full flex md:flex-row flex-col justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
+	<div class="w-full flex md:flex-row flex-col space-y-8 md:space-x-2 justify-between items-center mt-8 md:mt-12 xl:mt-16" style='perspective: 1000px;'>
 		{data.map(({ name, color, url }, index) => (
-			<div class='flex flex-col items-center gap-1' style={`transform-style: preserve-3d;transform: translateZ(${index === 1 ? '200' : '0'}px);`}> 
-				<img src={url} alt={`${randomSticker} of ${name}`} class="aspect-square" style={`filter: drop-shadow(0 0 4.3rem ${color});`}/>
-				<div class="p-6 bg-neutral-950 flex gap-2 rounded-lg border-2 border-[var(--border-color)]" style={`--border-color: ${color};`}>
-					<p class={`text-3xl md:text-4xl xl:text-6xl text-[color:var(--text-color)] font-semibold`} style={`--text-color: ${color};`}>{name}</p>
-				</div>
-			</div>
+			<PumpkinLanguage name={name} color={color} randomSticker={randomSticker} index={index} url={url} />
 		))}
 	</div>
 </section>
