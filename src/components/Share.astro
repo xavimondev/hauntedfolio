@@ -1,6 +1,7 @@
 ---
 import Flask from '@/components/icons/Flask.astro'
 import ShareResult from '@/components/ShareResult.astro'
+import Heading from '@/components/Heading.astro'
 
 interface Props {
 	username: string
@@ -12,10 +13,8 @@ const { username, summaryVideoUrl } = Astro.props
 
 <section class="content-center p-8 xl:w-screen xl:h-screen mx-auto max-w-5xl lg:max-w-[90rem] mt-24 xl:mt-32" data-username={username}>
   <div class="py-2 flex flex-col gap-6 md:gap-8">
-		<div class="bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200">
-			<h2 class="text-5xl md:text-7xl xl:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase">Cursed Sharing</h2>
-		</div>
-		<p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Share the eerie creations you find or craft within the shadows of the coding world</p>	
+    <Heading title="Cursed Sharing"/>
+    <p class="text-orange-200 font-body text-base lg:text-2xl max-w-4xl">Share the eerie creations you find or craft within the shadows of the coding world</p>	
 	</div>
   <div class:list={["h-auto mx-auto max-w-5xl lg:max-w-[90rem]", summaryVideoUrl ? 'hidden' : 'block']}>
       <div class="size-full inline-flex justify-center">
