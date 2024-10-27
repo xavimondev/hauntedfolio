@@ -14,7 +14,7 @@ const { username, githubUrl, spookyAlias, spookyBio, spookyAvatarUrl } = Astro.p
 	<div class="bg-black px-6 py-3 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200 mb-16 sm:mb-20">
 		<h1 class="text-4xl sm:text-5xl lg:text-8xl tracking-widest font-bold text-orange-600 transform font-heading text-balance animate-flicker uppercase" id="userCreepyAlias">{spookyAlias ?? ''}</h1>
 	</div>
-	<div class="w-full flex flex-col md:flex-row justify-between items-center gap-8 md:-rotate-2">
+	<div class="w-full flex flex-col md:flex-row justify-between items-center gap-8">
 		<div class="size-72 md:size-[300px] lg:size-[500px] p-4 bg-purple-200 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] rounded-lg transform flex flex-col items-center justify-center">
 			{
 				spookyAvatarUrl ? 
@@ -30,14 +30,12 @@ const { username, githubUrl, spookyAlias, spookyBio, spookyAvatarUrl } = Astro.p
 					id="userCreepyAvatar"
 				/>
 			}
-			
 			<div class="mt-4 flex flex-col gap-2">
 				<a href={githubUrl} class="text-xl sm:text-2xl font-bold text-purple-800 text-center hover:underline hover:underline-offset-2 hover:decoration-purple-900" rel="noreferrer noopener" target="_blank">{username} 👻</a>
-      	<!-- <p class="text-sm text-purple-600 text-center"></p> -->
 			</div>
     </div>
-		<div class="w-full md:max-w-sm lg:max-w-lg">
-			<p class="font-medium text-[#F0E68C] text-2xl lg:text-4xl font-body md:rotate-2 text-shadow shadow-black" id="userCreepyBio">{spookyBio ?? ''}</p>
+		<div class="w-full md:max-w-sm lg:max-w-xl">
+			<p class="font-medium text-[#F0E68C] text-2xl lg:text-4xl font-body text-shadow shadow-black text-pretty" id="userCreepyBio">{spookyBio ?? ''}</p>
 		</div>
 	</div>
 </div> 
