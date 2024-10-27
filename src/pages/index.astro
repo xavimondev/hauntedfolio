@@ -1,4 +1,5 @@
 ---
+import GithubRepository from '@/components/GithubRepository.astro'
 import Layout from '@/layout.astro'
 import { getCldOgImageUrl } from 'astro-cloudinary/helpers'
 
@@ -6,8 +7,9 @@ const ogImage = getCldOgImageUrl({ src: 'og/og-image', width: 1200, height: 630 
 ---
 
 <Layout ogImage={ogImage}>
-  <section class="min-h-dvh content-center size-full bg-[url(/assets/bg-index.avif)] bg-cover bg-center bg-no-repeat">
-    <div class="mx-auto max-w-2xl md:max-w-5xl p-8 flex flex-col gap-8 md:gap-12">
+  <section class="min-h-dvh content-center size-full bg-[url(/assets/bg-index.avif)] bg-cover bg-center bg-no-repeat relative">
+    <GithubRepository />
+    <div class="mx-auto max-w-2xl md:max-w-5xl p-8 flex flex-col space-y-16 md:space-y-24">
       <div class="relative bg-black p-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] -rotate-2 hover:rotate-0 transition duration-200">
         <h1 class="text-4xl md:text-8xl tracking-widest font-bold text-orange-600 transform inline-block font-heading text-balance"> 
           Turn your github into a hauntedfolio
@@ -16,12 +18,12 @@ const ogImage = getCldOgImageUrl({ src: 'og/og-image', width: 1200, height: 630 
       </div>
       <form id="searchForm" class="space-y-2">
         <div class="bg-black px-4 py-2 border-4 border-orange-500 shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] transition duration-200 mb-2 inline-flex items-center">
-          <label class="text-2xl md:text-4xl tracking-widest font-bold text-orange-600 transform"> 
+          <label class="text-xl md:text-3xl font-semibold text-orange-600 transform"> 
              Github Username
           </label>
         </div>
         <input 
-          class="w-full border-2 border-orange-500 p-6 focus-within:outline-none shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] text-2xl focus-within:text-[#A600A0] font-medium"  
+          class="w-full border-2 border-orange-500 p-3 md:p-6 focus-within:outline-none shadow-[4px_4px_0px_0px_rgba(249,115,22,1)] text-base md:text-2xl focus-within:text-[#A600A0] font-medium" 
           name="username"
           placeholder="xavimondev"
           autocapitalize="off"
