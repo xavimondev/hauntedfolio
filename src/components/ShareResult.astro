@@ -3,8 +3,6 @@ import Twitter from '@/components/icons/Twitter.astro'
 import Download from '@/components/icons/Download.astro'
 import Facebook from '@/components/icons/Facebook.astro'
 import Linkedin from '@/components/icons/Linkedin.astro'
-import Play from '@/components/icons/Play.astro'
-import Pause from '@/components/icons/Pause.astro'
 
 interface Props {
 	summaryVideoUrl?: string
@@ -14,63 +12,56 @@ const { summaryVideoUrl } = Astro.props
 ---
 
 <div class:list={["w-full mt-8 lg:mt-12 xl:mt-16 animate-fade-in animate-duration-1000", !summaryVideoUrl ? 'hidden' : 'block']} id="shareResultPanel">
-    <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-8 size-full md:justify-between">
-      <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
-        <video 
-          src={summaryVideoUrl}
-          class="w-full h-full object-cover relative z-20"
-          poster="https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/assets/pc-videoplayer"
-          id="video"
-        >
-          <!-- <source src={videoUrl} type="video/mp4" /> -->
-          Your browser does not support the video tag.
-        </video>
-        <button
-          id="buttonVideo"
-          data-status="stop"
-          class='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 bg-orange-500 text-white rounded-full p-4 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-opacity duration-300'
-        >
-          <Play class="size-12 block" id="iconPlay"/>
-          <Pause class="size-12 hidden" id="iconPause"/>
-        </button>
-      </div>
-      <div class="size-full md:max-w-md">
-        <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
-          <p class="text-lg md:text-xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
-          <p class="text-orange-200 text-sm">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
-          <div class="flex flex-col space-y-3 mt-5 size-full">
-            <button 
-              class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              aria-label="Share on Twitter"
-              id="shareX"
-            >
-              <Twitter class="mr-2 size-5" />
-              Share on Twitter
-            </button>
-            <button 
-              class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              id="shareFacebook"
-            >
-              <Facebook class="mr-2 size-5" />
-              Share on Facebook
-            </button>
-            <button 
-              class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 border-b-4 border-sky-800 hover:border-sky-900 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              id="shareLinkedin"
-            >
-              <Linkedin class="mr-2 size-5" />
-              Share on LinkedIn
-            </button>
-            <button 
-              id="btnDownloadVideo"
-              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
-              aria-label="Download Video"
-            >
-              <Download class="mr-2 size-5" />
-              Download Video
-            </button>
-          </div>
+  <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-8 size-full md:justify-between">
+    <div class="aspect-video mb-6 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative">
+      <video 
+        src={summaryVideoUrl}
+        class="w-full h-full object-cover relative z-20"
+        poster="https://res.cloudinary.com/dr2htruiy/image/upload/f_auto,q_auto/v1/assets/pc-videoplayer"
+        id="video"
+        controls
+      >
+        <!-- <source src={videoUrl} type="video/mp4" /> -->
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="size-full md:max-w-md">
+      <div class="p-4 bg-black border-2 border-orange-500 rounded-lg shadow-[4px_4px_0px_0px_rgba(249,115,22,1)]">
+        <p class="text-lg md:text-xl font-bold mb-2 text-orange-500">🎃 Boo-st Your GitHub Presence! 👻</p>
+        <p class="text-orange-200 text-sm">Share your GitHub Haunted Summary and let your spooky contributions shine!</p>
+        <div class="flex flex-col space-y-3 mt-5 size-full">
+          <button 
+            class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 border-b-4 border-orange-700 hover:border-orange-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+            aria-label="Share on Twitter"
+            id="btnshareTwitter"
+          >
+            <Twitter class="mr-2 size-5" />
+            Share on Twitter
+          </button>
+          <button 
+            class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 border-b-4 border-purple-700 hover:border-purple-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+            id="btnShareFacebook"
+          >
+            <Facebook class="mr-2 size-5" />
+            Share on Facebook
+          </button>
+          <button 
+            class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 border-b-4 border-sky-800 hover:border-sky-900 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+            id="btnShareLinkedin"
+          >
+            <Linkedin class="mr-2 size-5" />
+            Share on LinkedIn
+          </button>
+          <button 
+            id="btnDownloadVideo"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-800 rounded transform transition-transform hover:scale-105 inline-flex items-center"
+            aria-label="Download Video"
+          >
+            <Download class="mr-2 size-5" />
+            Download Video
+          </button>
         </div>
       </div>
     </div>
-	</div>
+  </div>
+</div>

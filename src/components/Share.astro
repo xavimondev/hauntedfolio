@@ -35,7 +35,6 @@ const { username, summaryVideoUrl } = Astro.props
         </button>  
       </div>
     </div>
-
   <ShareResult summaryVideoUrl={summaryVideoUrl}/>
 </section>
 
@@ -45,20 +44,18 @@ const { username, summaryVideoUrl } = Astro.props
   import { handleShareFacebook, handleShareLinkedin, handleShareX } from '@/helpers/social-sharing'
   import { pollForProcessingImage } from '@cloudinary-util/util'
 
+  const btnDownloadVideo = document.querySelector('#btnDownloadVideo') as HTMLButtonElement
+  const btnshareTwitter = document.querySelector('#btnshareTwitter') as HTMLButtonElement
+  const btnShareFacebook = document.querySelector('#btnShareFacebook') as HTMLButtonElement
+  const btnShareLinkedin = document.querySelector('#btnShareLinkedin') as HTMLButtonElement
+
   const shareInitialWarning = document.querySelector('#shareInitialWarning') as HTMLDivElement
   const shareResultPanel = document.querySelector('#shareResultPanel') as HTMLDivElement
   const userFact = document.querySelector('#userFact') as HTMLParagraphElement
   const btnGenerateSpookyVideo = document.querySelector('#btnGenerateSpookyVideo') as HTMLButtonElement
   const username = document.querySelector('[data-username]')?.getAttribute('data-username') ?? ''
-  const btnDownloadVideo = document.querySelector('#btnDownloadVideo') as HTMLButtonElement
-  const shareXButton = document.querySelector('#shareX') as HTMLButtonElement
-  const shareFacebookButton = document.querySelector('#shareFacebook') as HTMLButtonElement
-  const shareLinkedinButton = document.querySelector('#shareLinkedin') as HTMLButtonElement
-
-  const buttonVideo = document.querySelector('#buttonVideo') as HTMLButtonElement
+  
   const videoPlayer = document.querySelector('#video') as HTMLVideoElement
-  // const iconPlay = document.querySelector('#iconPlay') as HTMLElement
-  // const iconPause = document.querySelector('#iconPause') as HTMLElement
 
   const generateVideo = async () => {
     const response = await fetch('/api/generate-video', {
@@ -144,29 +141,21 @@ const { username, summaryVideoUrl } = Astro.props
     shareIntervalId = null
   }
 
-  buttonVideo.addEventListener('click', () => {
-    const status = buttonVideo.getAttribute('data-status') as string
-    if(status === 'playing') {
-      videoPlayer.pause()
-      buttonVideo.style.opacity = "100";
-      buttonVideo.setAttribute('data-status', 'stop')
-    } else {
-      videoPlayer.play()
-      buttonVideo.style.opacity = "0";
-      buttonVideo.setAttribute('data-status', 'playing')
-    }
-  })
-
-  shareFacebookButton.addEventListener('click', () => {
+  btnShareFacebook.addEventListener('click', () => {
     handleShareFacebook({ username })
   })
 
-  shareLinkedinButton.addEventListener('click', () => {
+  btnShareLinkedin.addEventListener('click', () => {
     handleShareLinkedin({ username })
   })
 
-  shareXButton.addEventListener('click', () => {
+  btnshareTwitter.addEventListener('click', () => {
     handleShareX({ username })
+  })
+
+  btnDownloadVideo.addEventListener('click', () => {
+    const linkVideo = videoPlayer.src
+    downloadVideo({ videoUrl: linkVideo })
   })
 
   btnGenerateSpookyVideo.addEventListener('click', () => {
@@ -174,10 +163,6 @@ const { username, summaryVideoUrl } = Astro.props
     generateUserFact()
   })
 
-  btnDownloadVideo.addEventListener('click', () => {
-    const linkVideo = videoPlayer.src
-    // console.log('linkVideo', linkVideo)
-    downloadVideo({ videoUrl: linkVideo })
-  })
+  
  
 </script>
