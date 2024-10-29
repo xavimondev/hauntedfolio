@@ -11,7 +11,7 @@ interface Props {
 const { summaryVideoUrl } = Astro.props
 ---
 
-<div class:list={["w-full mt-8 lg:mt-12 xl:mt-16 animate-fade-in animate-duration-1000", !summaryVideoUrl ? 'hidden' : 'block']} id="shareResultPanel">
+<div class:list={["w-full animate-fade-in animate-duration-1000 mt-8 lg:mt-16", !summaryVideoUrl ? 'hidden' : 'block']} id="shareResultPanel">
   <div class="bg-orange-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 relative overflow-hidden flex flex-col md:flex-row gap-8 size-full md:justify-between">
     <div class="size-full aspect-video border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
       <video 
