@@ -24,17 +24,17 @@ const { summary, avatarUrl, username, githubUrl, spookyAlias, spookyBio, spookyA
       muted
       autoplay={Boolean(spookyAlias)}
       class:list={["aspect-video size-full overflow-hidden object-cover", !spookyAlias ? 'hidden' : 'block']}
-      src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4'
+      src='/assets/thunder-effect.mp4'
     >
-      <source type="video/mp4" src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/hauntedfolio/assets/thunder-effect.mp4' />
+      <source type="video/mp4" src='/assets/thunder-effect.mp4' />
     </video>
     <video 
       id="videoSmooke" 
       loop
       class="aspect-video size-full overflow-hidden object-cover hidden opacity-50"
       muted
-      src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/assets/smooke-effect.mp4'>
-      <source type="video/mp4" src='https://res.cloudinary.com/dr2htruiy/video/upload/f_auto:video,q_auto/v1/assets/smooke-effect.mp4' />
+      src='/assets/smooke-effect.mp4'>
+      <source type="video/mp4" src='/assets/smooke-effect.mp4' />
     </video>
   </div>
   {!spookyAlias 
